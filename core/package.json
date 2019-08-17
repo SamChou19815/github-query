@@ -1,0 +1,17 @@
+{
+  "name": "github-query-core",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "tsc"
+  },
+  "files": [
+    "dist/"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "devDependencies": {
+    "@types/node": "^12.6.8",
+    "typescript": "^3.5.3"
+  }
+}

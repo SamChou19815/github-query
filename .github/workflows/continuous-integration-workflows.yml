@@ -1,0 +1,18 @@
+name: CI
+on: [push]
+
+jobs:
+  build-and-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Node
+        uses: actions/setup-node@v1
+      - name: Create Dummy Configuration Files
+        run: |
+          echo "export const GITHUB_TOKEN = '';" > backend/src/configuration.ts
+          echo "export const DATABASE_URL = '';" >> backend/src/configuration.ts
+          echo "{}" > backend/src/firebase-adminsdk.json
+          echo "{}" > functions/src/fetch-configuration.json
+      - name: Build All
+        run: ./scripts/build-all

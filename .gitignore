@@ -1,0 +1,15 @@
+# System Files
+.DS_Store
+
+# Build
+**/node_modules/
+**/dist/
+**/build/
+
+# Configurations
+backend/src/configuration.ts
+backend/src/firebase-adminsdk.json
+functions/src/fetch-configuration.json
+
+# Firebase
+.firebase

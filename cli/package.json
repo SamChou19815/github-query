@@ -1,0 +1,24 @@
+{
+  "name": "github-query-cli",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc"
+  },
+  "main": "dest/index.js",
+  "files": [
+    "dist/"
+  ],
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "github-query-backend": "file:../backend",
+    "yargs": "^13.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.6.8",
+    "@types/yargs": "^13.0.2",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  }
+}

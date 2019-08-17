@@ -1,0 +1,27 @@
+{
+  "name": "github-query-backend",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc"
+  },
+  "files": [
+    "*.tgz",
+    "dist/"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "firebase-admin": "^8.3.0",
+    "github-query-core": "file:../core",
+    "graphql-request": "^1.8.2",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.6.8",
+    "@types/node-fetch": "^2.5.0",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  }
+}

@@ -1,0 +1,61 @@
+#!/bin/bash
+
+# The workaround script to overcome Firebase CLI's inability
+# to fetch code outside of functions folder.
+
+# This script should be run from project root like
+# ./scripts/deploy-functions [project name]
+
+set -x
+
+# Step 1: Build All Projects
+
+cd core
+yarn
+yarn build
+cd ../
+
+cd backend
+yarn
+yarn build
+cd ../
+
+cd functions
+yarn
+yarn build
+cd ../
+
+# Step 2: Setup mirror folders for deployments
+
+mkdir temp
+mkdir temp/functions
+mkdir temp/functions/src
+mkdir temp/functions/core
+mkdir temp/functions/backend
+
+# Copy Generated Code
+mkdir temp/functions/dist
+mkdir temp/functions/core
+mkdir temp/functions/core/dist
+mkdir temp/functions/backend
+mkdir temp/functions/backend/dist
+cp -r functions/dist/ temp/functions/dist
+cp -r core/dist/ temp/functions/core/dist
+cp -r backend/dist/ temp/functions/backend/dist
+
+# Copy package.json
+cp core/package.json temp/functions/core/package.json
+cp backend/package.json temp/functions/backend/package.json
+cp functions/package.json temp/functions/package.json
+
+echo '{}' > temp/firebase.json
+
+sed -i -e 's/..\/backend/backend/g' temp/functions/package.json
+
+cd temp
+cd functions
+yarn
+cd ../
+firebase deploy --only functions --project "$@"
+cd ../
+rm -rf temp

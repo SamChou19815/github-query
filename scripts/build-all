@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -x
+
+cd core
+rm -rf node_modules
+yarn install
+yarn build
+cd ../
+
+cd backend
+rm -rf node_modules
+yarn install
+yarn build
+cd ../
+
+cd cli
+rm -rf node_modules
+yarn install
+yarn build
+cd ../
+
+# optional if you don't care about deployment
+cd functions
+rm -rf node_modules
+yarn install
+yarn build
+cd ../
+
+cd frontend
+rm -rf node_modules
+yarn install
+yarn build
+cd ../

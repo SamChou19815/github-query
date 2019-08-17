@@ -1,0 +1,29 @@
+.Container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.Centered {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 720px) {
+  .InformationCard {
+    margin: 1em auto;
+    width: 90vw;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .InformationCard {
+    margin: 1em auto;
+    width: 600px;
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "developer-sam"
+  },
+  "targets": {
+    "developer-sam": {
+      "hosting": {
+        "github-query": [
+          "developer-sam-github-query"
+        ]
+      }
+    }
+  }
+}

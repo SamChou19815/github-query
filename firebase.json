@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "github-query",
+      "public": "frontend/build",
+      "ignore": ["**/.*"],
+      "rewrites": [
+        {
+          "source": "/api/query",
+          "function": "GithubQueryHandleClientRequest"
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}
