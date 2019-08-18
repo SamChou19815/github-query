@@ -12,7 +12,7 @@ type Configuration = {
   readonly repositories: readonly RepositoryId[];
 };
 
-const { limit, frequency, repositories }: Configuration = configuration;
+const { limit, frequency, repositories }: Configuration = configuration as Configuration;
 
 export const GithubQueryScheduledFetch = functions.pubsub.schedule(frequency).onRun(async () => {
   const issuesLimit = limit;
