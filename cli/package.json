@@ -8,7 +8,7 @@
   },
   "main": "index.js",
   "dependencies": {
-    "github-query-backend": "file:../backend",
+    "github-query-backend": "0.1.0",
     "yargs": "^13.3.0"
   },
   "devDependencies": {

@@ -2,33 +2,10 @@
 
 set -x
 
-cd core
-rm -rf node_modules
 yarn install
-yarn build
-cd ../
-
-cd backend
-rm -rf node_modules
-yarn install
-yarn build
-cd ../
-
-cd cli
-rm -rf node_modules
-yarn install
-yarn build
-cd ../
-
+yarn workspace github-query-core build
+yarn workspace github-query-backend build
+yarn workspace github-query-cli build
 # optional if you don't care about deployment
-cd functions
-rm -rf node_modules
-yarn install
-yarn build
-cd ../
-
-cd frontend
-rm -rf node_modules
-yarn install
-yarn build
-cd ../
+yarn workspace github-query-functions build
+yarn workspace github-query-frontend build

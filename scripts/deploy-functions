@@ -10,20 +10,9 @@ set -x
 
 # Step 1: Build All Projects
 
-cd core
-yarn
-yarn build
-cd ../
-
-cd backend
-yarn
-yarn build
-cd ../
-
-cd functions
-yarn
-yarn build
-cd ../
+yarn install
+yarn workspace github-query-core build
+yarn workspace github-query-backend build
 
 # Step 2: Setup mirror folders for deployments
 
@@ -41,11 +30,12 @@ cp -r backend/*.json backend/*.js temp/functions/backend/
 
 echo '{}' >temp/firebase.json
 
-sed -i -e 's/..\/backend/backend/g' temp/functions/package.json
+sed -i -e 's/"github-query-backend": "0.1.0"/"github-query-backend": "file:backend"/g' temp/functions/package.json
+sed -i -e 's/"github-query-core": "0.1.0"/"github-query-core": "file:..\/core"/g' temp/functions/backend/package.json
 
 cd temp/functions
 yarn
 cd ../
-firebase deploy --only functions
+firebase deploy --only functions --project developer-sam
 cd ../
 rm -rf temp
