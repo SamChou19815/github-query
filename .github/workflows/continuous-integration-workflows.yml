@@ -18,7 +18,7 @@ jobs:
         run: yarn install
       - name: Prettier
         run: yarn prettier:check
-      - name: Lint
-        run: yarn lint
       - name: Build All
         run: ./scripts/build-all
+      - name: Lint
+        run: yarn lint
