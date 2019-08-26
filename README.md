@@ -16,7 +16,7 @@ A cross platform tool for querying and displaying GitHub repository metrics.
 
 #### GitHub Personal Access Token
 
-Create `backend/src/configuration.ts` with content:
+Create `backend/configuration.ts` with content:
 
 ```typescript
 /*
@@ -36,11 +36,11 @@ export const DATABASE_URL = '[Your Firebase Database URL]';
 #### Firebase Admin SDK
 
 1. Create a Firebase project and enable Cloud Firestore.
-2. Download your admin SDK json and put it in `backend/src/firebase-adminsdk.json`
+2. Download your admin SDK json and put it in `backend/firebase-adminsdk.json`
 
 #### Watching Repository Configuration
 
-Create `functions/src/fetch-configuration.json` with content like:
+Create `functions/fetch-configuration.json` with content like:
 
 ```json
 {
@@ -85,14 +85,15 @@ Options:
 
 ### Deployment
 
-Setup Firebase for yourself and then run:
+1. Setup Firebase for yourself
+2. Edit `.firebaserc`, `firebase.json`, and `scripts/deploy-functions` to use your project ID.
+3. Run
 
 ```bash
 # Deploy functions
-./scripts/deploy-functions [your-firebase-project-name]
+./scripts/deploy-functions
 # Deploy frontend (need to install first)
-# You will also need to edit .firebaserc and firebase.json.
-firebase deploy --only hosting --project [your-firebase-project-name]
+firebase deploy --only hosting
 ```
 
 ## Architecture Overview
