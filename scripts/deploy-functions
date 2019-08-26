@@ -29,33 +29,23 @@ cd ../
 
 mkdir temp
 mkdir temp/functions
-mkdir temp/functions/src
 mkdir temp/functions/core
 mkdir temp/functions/backend
 
 # Copy Generated Code
-mkdir temp/functions/dist
-mkdir temp/functions/core
-mkdir temp/functions/core/dist
-mkdir temp/functions/backend
-mkdir temp/functions/backend/dist
-cp -r functions/dist/ temp/functions/dist
-cp -r core/dist/ temp/functions/core/dist
-cp -r backend/dist/ temp/functions/backend/dist
+cp functions/*.json functions/*.js temp/functions/
+cp -r core/*.json core/*.js temp/functions/core/
+cp -r backend/*.json backend/*.js temp/functions/backend/
 
 # Copy package.json
-cp core/package.json temp/functions/core/package.json
-cp backend/package.json temp/functions/backend/package.json
-cp functions/package.json temp/functions/package.json
 
-echo '{}' > temp/firebase.json
+echo '{}' >temp/firebase.json
 
 sed -i -e 's/..\/backend/backend/g' temp/functions/package.json
 
-cd temp
-cd functions
+cd temp/functions
 yarn
 cd ../
-firebase deploy --only functions --project "$@"
+firebase deploy --only functions
 cd ../
 rm -rf temp

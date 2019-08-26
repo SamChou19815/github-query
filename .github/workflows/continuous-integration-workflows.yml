@@ -10,9 +10,9 @@ jobs:
         uses: actions/setup-node@v1
       - name: Create Dummy Configuration Files
         run: |
-          echo "export const GITHUB_TOKEN = '';" > backend/src/configuration.ts
-          echo "export const DATABASE_URL = '';" >> backend/src/configuration.ts
-          echo "{}" > backend/src/firebase-adminsdk.json
-          echo "{}" > functions/src/fetch-configuration.json
+          echo "export const GITHUB_TOKEN = '';" > backend/configuration.ts
+          echo "export const DATABASE_URL = '';" >> backend/configuration.ts
+          echo "{}" > backend/firebase-adminsdk.json
+          echo "{}" > functions/fetch-configuration.json
       - name: Build All
         run: ./scripts/build-all

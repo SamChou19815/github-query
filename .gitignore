@@ -3,13 +3,17 @@
 
 # Build
 **/node_modules/
-**/dist/
 **/build/
+*.js
+*.d.ts
 
 # Configurations
-backend/src/configuration.ts
-backend/src/firebase-adminsdk.json
-functions/src/fetch-configuration.json
+backend/configuration.ts
+backend/firebase-adminsdk.json
+functions/fetch-configuration.json
 
 # Firebase
 .firebase
+
+# Editor
+.vscode/

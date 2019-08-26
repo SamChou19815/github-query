@@ -6,12 +6,6 @@
     "start": "ts-node src/index.ts",
     "build": "tsc"
   },
-  "files": [
-    "*.tgz",
-    "dist/"
-  ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "dependencies": {
     "firebase-admin": "^8.3.0",
     "github-query-core": "file:../core",

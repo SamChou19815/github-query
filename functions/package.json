@@ -3,15 +3,9 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "start": "ts-node src/index.ts",
     "build": "tsc"
   },
-  "files": [
-    "*.tgz",
-    "dist/"
-  ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "index.js",
   "dependencies": {
     "firebase-functions": "^3.2.0",
     "github-query-backend": "file:../backend"

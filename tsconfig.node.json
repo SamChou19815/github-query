@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "lib": ["dom", "es2016"],
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "declaration": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "exclude": []
+}

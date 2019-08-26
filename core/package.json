@@ -5,11 +5,6 @@
   "scripts": {
     "build": "tsc"
   },
-  "files": [
-    "dist/"
-  ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "devDependencies": {
     "@types/node": "^12.6.8",
     "typescript": "^3.5.3"
