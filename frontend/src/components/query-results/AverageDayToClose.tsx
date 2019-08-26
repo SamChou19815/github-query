@@ -18,8 +18,7 @@ export default ({ items, totalCount }: AverageDayToCloseProps): ReactElement => 
       totalOpenedTime += closedAt.getTime() - createdAt.getTime();
     }
   });
-  const averageDaysToClose = totalCount === 0
-    ? 0
-    : parseFloat((totalOpenedTime / 1000 / 3600 / 24 / totalCount).toFixed(2));
+  const averageDaysToClose =
+    totalCount === 0 ? 0 : parseFloat((totalOpenedTime / 1000 / 3600 / 24 / totalCount).toFixed(2));
   return <BadgedText title="Average Days to Close" count={averageDaysToClose} />;
 };

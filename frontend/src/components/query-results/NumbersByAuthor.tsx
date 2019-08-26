@@ -6,7 +6,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
-interface HasAuthor { readonly author: string | null; }
+interface HasAuthor {
+  readonly author: string | null;
+}
 
 type NumbersByAuthorProps = { readonly title: string; readonly items: readonly HasAuthor[] };
 
@@ -20,10 +22,12 @@ const getSortedAuthorCountMapping = (items: readonly HasAuthor[]): readonly Entr
     }
     authorCountMap.set(author, (authorCountMap.get(author) || 0) + 1);
   });
-  return Array.from(authorCountMap.entries())
-    .map(([author, count]) => ({ author, count }))
-    // sorted in decreasing order
-    .sort((entry1, entry2) => entry2.count - entry1.count);
+  return (
+    Array.from(authorCountMap.entries())
+      .map(([author, count]) => ({ author, count }))
+      // sorted in decreasing order
+      .sort((entry1, entry2) => entry2.count - entry1.count)
+  );
 };
 
 export default ({ title, items }: NumbersByAuthorProps): ReactElement | null => {
@@ -35,7 +39,7 @@ export default ({ title, items }: NumbersByAuthorProps): ReactElement | null => 
     <>
       <Divider />
       <CardContent>
-        <h4>{title} by authors:</h4>
+        <h4>{`${title} by authors:`}</h4>
         <List dense>
           {authorCountMapping.map(({ author, count }) => (
             <ListItem
@@ -45,12 +49,8 @@ export default ({ title, items }: NumbersByAuthorProps): ReactElement | null => 
               target="_blank"
               rel="noopener noreferrer"
             >
-              <ListItemText
-                primary={author}
-              />
-              <ListItemSecondaryAction>
-                {count}
-              </ListItemSecondaryAction>
+              <ListItemText primary={author} />
+              <ListItemSecondaryAction>{count}</ListItemSecondaryAction>
             </ListItem>
           ))}
         </List>

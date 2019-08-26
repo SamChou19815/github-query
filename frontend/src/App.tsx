@@ -1,21 +1,21 @@
 import React, { ReactElement } from 'react';
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { createMuiTheme } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 import About from './components/About';
 import Help from './components/Help';
 import RepositoryQueryResult from './components/query-results';
-import styles from './App.module.css'
+import styles from './App.module.css';
 import { State } from './data/store';
-import { useSelector } from 'react-redux';
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#3E7AE2',
+      main: '#3E7AE2'
     },
     secondary: {
       main: '#D52262'
@@ -24,7 +24,7 @@ const theme = createMuiTheme({
 });
 
 export default (): ReactElement => {
-  const repositoryName = useSelector(({ repositoryName }: State) => repositoryName);
+  const repositoryName = useSelector((state: State) => state.repositoryName);
   return (
     <MuiThemeProvider theme={theme}>
       <>

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import * as yargs from 'yargs';
 import * as backend from 'github-query-backend';
 

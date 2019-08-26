@@ -45,7 +45,7 @@ export default ({ items }: ItemsProps<Commit<Date>>): ReactElement => {
   });
   return (
     <Card className={cardStyles.InformationCard}>
-      <CardHeader title={`Recent Commits Statistics`} />
+      <CardHeader title="Recent Commits Statistics" />
       <Divider />
       <CardContent className={cardStyles.Centered}>
         <BadgedText title="No Status" count={noStatusCount} />

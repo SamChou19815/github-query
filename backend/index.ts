@@ -1,10 +1,10 @@
+import { Repository } from 'github-query-core';
 import { fetchRecent, fetchAll, RequestConfiguration } from './client';
 import {
   initialize as initializeFirestore,
   update as updateRepository,
   readRecent
 } from './database';
-import { Repository } from 'github-query-core';
 
 const fetchRecentAndRecord = (configuration: RequestConfiguration): Promise<Repository<Date>> =>
   fetchRecent(configuration).then(async ({ repository }) => {

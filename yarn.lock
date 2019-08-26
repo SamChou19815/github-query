@@ -862,7 +862,7 @@
     retry-request "^4.0.0"
     teeny-request "^5.2.1"
 
-"@google-cloud/firestore@^2.0.0":
+"@google-cloud/firestore@^2.0.0", "@google-cloud/firestore@^2.2.8":
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/@google-cloud/firestore/-/firestore-2.2.8.tgz#99d859690acda9d0094dca09b05efed32ac1d921"
   integrity sha512-838nh/3Eyv3GB1TSIwWJaOLTDjQZ5mNm3PzgkNZA31GHK91GE4mziYsH05FQJ9FkCbn2TSEhXFihufs5hqBPOg==
@@ -5050,7 +5050,7 @@ find-up@^2.0.0, find-up@^2.1.0:
   dependencies:
     locate-path "^2.0.0"
 
-firebase-admin@^8.3.0:
+firebase-admin@^8.4.0:
   version "8.4.0"
   resolved "https://registry.yarnpkg.com/firebase-admin/-/firebase-admin-8.4.0.tgz#b3ba7330afbaa0d223f344d361f566da0e3f2126"
   integrity sha512-DRAAPRFYhdpwNu8KDceuem7Y1yvFZRqAf6iO5/5IwiHTp9ojRin/V8eV2eNjY3C4tZCKkJDpXvCBtwbvBejFDA==
@@ -10027,7 +10027,7 @@ react-router-dom@^5.0.1:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-router@5.0.1:
+react-router@5.0.1, react-router@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-5.0.1.tgz#04ee77df1d1ab6cb8939f9f01ad5702dbadb8b0f"
   integrity sha512-EM7suCPNKb1NxcTZ2LEOWFtQBQRQXecLxVpdsP4DW4PbbqYWeRiLyV/Tt1SdCrvT2jcyXAXmVTmzvSzrPR63Bg==

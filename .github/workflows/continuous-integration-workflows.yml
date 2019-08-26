@@ -14,5 +14,11 @@ jobs:
           echo "export const DATABASE_URL = '';" >> backend/configuration.ts
           echo "{}" > backend/firebase-adminsdk.json
           echo "{}" > functions/fetch-configuration.json
+      - name: Yarn Install
+        run: yarn install
+      - name: Prettier
+        run: yarn prettier:check
+      - name: Lint
+        run: yarn lint
       - name: Build All
         run: ./scripts/build-all

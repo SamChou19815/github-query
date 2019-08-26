@@ -1,5 +1,4 @@
 import * as admin from 'firebase-admin';
-import * as serviceAccount from './firebase-adminsdk.json';
 import { WriteBatch, Timestamp } from '@google-cloud/firestore';
 import {
   processRepository,
@@ -9,6 +8,7 @@ import {
   PullRequest,
   Commit
 } from 'github-query-core';
+import * as serviceAccount from './firebase-adminsdk.json';
 import { DATABASE_URL } from './configuration.js';
 
 export const initialize = (): void => {

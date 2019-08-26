@@ -5,12 +5,12 @@ import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Timer from '@material-ui/icons/Timer';
 import Error from '@material-ui/icons/Error';
-import QueryResultDisplay from './QueryResultDisplay';
 import { processRepository, Repository } from 'github-query-core';
-import { RouteComponentProps } from "react-router";
-import { RepositoryId } from './types'
+import { RouteComponentProps } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
+import { RepositoryId } from './types';
+import QueryResultDisplay from './QueryResultDisplay';
 import { Action } from '../../data/store';
 import styles from './index.module.css';
 import cardStyles from '../card.module.css';
@@ -21,6 +21,7 @@ interface RouteParameters {
 }
 
 const getRepositoryId = ({ match }: RouteComponentProps): RepositoryId => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { owner, name }: RouteParameters = match.params as any;
   return { owner, name };
 };
@@ -36,17 +37,19 @@ export default (props: RouteComponentProps): ReactElement => {
     if (repository !== 'LOADING') {
       return;
     }
-    fetch(`/api/query?owner=${owner}&name=${name}`).then(response => response.json()).then(json => {
-      if (json === null) {
-        setRepository(null);
-        return;
-      }
-      const repository = processRepository(
-        json as Repository<string>,
-        stringDate => new Date(stringDate),
-      );
-      setRepository(repository);
-    });
+    fetch(`/api/query?owner=${owner}&name=${name}`)
+      .then(response => response.json())
+      .then(json => {
+        if (json === null) {
+          setRepository(null);
+          return;
+        }
+        const fetchedRepository = processRepository(
+          json as Repository<string>,
+          stringDate => new Date(stringDate)
+        );
+        setRepository(fetchedRepository);
+      });
   }, [name, owner, repository]);
   if (repository === 'LOADING') {
     return (
@@ -65,9 +68,7 @@ export default (props: RouteComponentProps): ReactElement => {
       <div id="query-result">
         <Card className={cardStyles.InformationCard}>
           <CardHeader avatar={<Error />} title="NOT_TRACKED" />
-          <CardContent>
-            {`${owner}/${name} is not tracked by this tool.`}
-          </CardContent>
+          <CardContent>{`${owner}/${name} is not tracked by this tool.`}</CardContent>
         </Card>
       </div>
     );

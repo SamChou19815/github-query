@@ -3,10 +3,10 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
+import { Repository } from 'github-query-core';
 import BadgedText from './BadgedText';
 import ChippedText from './ChippedText';
 import cardStyles from '../card.module.css';
-import { Repository } from 'github-query-core';
 
 export default ({
   hasIssuesEnabled,
@@ -15,22 +15,22 @@ export default ({
   pushedAt,
   issuesCount,
   pullRequestsCount,
-  commitsCount,
+  commitsCount
 }: Repository<Date>): ReactElement => (
-    <Card className={cardStyles.InformationCard}>
-      <CardHeader title="Basic Information" />
-      <Divider />
-      <CardContent className={cardStyles.Centered}>
-        <ChippedText text={`Issues are ${hasIssuesEnabled ? 'enabled' : 'disabled'}.`} />
-        <ChippedText text={licenseKey == null ? 'No license' : licenseKey} />
-        <ChippedText text={`Updated: ${updatedAt.toLocaleDateString()}`} />
-        <ChippedText text={`Pushed: ${pushedAt.toLocaleDateString()}`} />
-      </CardContent>
-      <Divider />
-      <CardContent className={cardStyles.Centered}>
-        <BadgedText title="Issues" count={issuesCount} />
-        <BadgedText title="Pull Requests" count={pullRequestsCount} />
-        <BadgedText title="Commits" count={commitsCount} />
-      </CardContent>
-    </Card>
-  );
+  <Card className={cardStyles.InformationCard}>
+    <CardHeader title="Basic Information" />
+    <Divider />
+    <CardContent className={cardStyles.Centered}>
+      <ChippedText text={`Issues are ${hasIssuesEnabled ? 'enabled' : 'disabled'}.`} />
+      <ChippedText text={licenseKey == null ? 'No license' : licenseKey} />
+      <ChippedText text={`Updated: ${updatedAt.toLocaleDateString()}`} />
+      <ChippedText text={`Pushed: ${pushedAt.toLocaleDateString()}`} />
+    </CardContent>
+    <Divider />
+    <CardContent className={cardStyles.Centered}>
+      <BadgedText title="Issues" count={issuesCount} />
+      <BadgedText title="Pull Requests" count={pullRequestsCount} />
+      <BadgedText title="Commits" count={commitsCount} />
+    </CardContent>
+  </Card>
+);

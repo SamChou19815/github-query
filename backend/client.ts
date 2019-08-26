@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
-import { GITHUB_TOKEN } from './configuration';
 import { Response, Repository, processClientResponse } from 'github-query-core';
+import { GITHUB_TOKEN } from './configuration';
 
 const ENDPOINT = 'https://api.github.com/graphql';
 
@@ -151,13 +151,15 @@ export const fetchRecent = async ({
 
 export const fetchAll = async (owner: string, name: string): Promise<Repository<Date>> => {
   const LIMIT = 100;
-  let { repository, issuesCursor, pullRequestsCursor, commitHistoryCursor } = await fetchRecent({
+  const information = await fetchRecent({
     owner,
     name,
     issuesLimit: LIMIT,
     pullRequestsLimit: LIMIT,
     commitHistoryLimit: LIMIT
   });
+  const { repository } = information;
+  let { issuesCursor, pullRequestsCursor, commitHistoryCursor } = information;
   const { issues, pullRequests, commits, ...repositoryMetadata } = repository;
   const issueList = [...issues];
   const pullRequestList = [...pullRequests];
@@ -168,6 +170,7 @@ export const fetchAll = async (owner: string, name: string): Promise<Repository<
       issuesCursor: newIssuesCursor,
       pullRequestsCursor: newPullRequestsCursor,
       commitHistoryCursor: newCommitHistoryCursor
+      // eslint-disable-next-line no-await-in-loop
     } = await fetchRecent({
       owner,
       name,

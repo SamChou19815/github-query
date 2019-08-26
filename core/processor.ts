@@ -114,18 +114,20 @@ export const processRepository = <T, R>(
     issuesCount,
     pullRequestsCount,
     commitsCount,
-    issues: issues.map(({ createdAt, closedAt, updatedAt, ...rest }) => ({
+    issues: issues.map(({ createdAt, closedAt, updatedAt: updatedAtTime, ...rest }) => ({
       ...rest,
       createdAt: converter(createdAt),
       closedAt: optionalConverter(closedAt),
-      updatedAt: converter(updatedAt)
+      updatedAt: converter(updatedAtTime)
     })),
-    pullRequests: pullRequests.map(({ createdAt, closedAt, updatedAt, ...rest }) => ({
-      ...rest,
-      createdAt: converter(createdAt),
-      closedAt: optionalConverter(closedAt),
-      updatedAt: converter(updatedAt)
-    })),
+    pullRequests: pullRequests.map(
+      ({ createdAt, closedAt, updatedAt: updatedAtTime, ...rest }) => ({
+        ...rest,
+        createdAt: converter(createdAt),
+        closedAt: optionalConverter(closedAt),
+        updatedAt: converter(updatedAtTime)
+      })
+    ),
     commits: commits.map(({ committedDate, pushedDate, ...rest }) => ({
       ...rest,
       committedDate: converter(committedDate),

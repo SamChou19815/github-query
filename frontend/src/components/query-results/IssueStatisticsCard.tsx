@@ -27,7 +27,7 @@ export default ({ items }: ItemsProps<Issue<Date>>): ReactElement => {
   });
   return (
     <Card className={cardStyles.InformationCard}>
-      <CardHeader title={`Recent Issues Statistics`} />
+      <CardHeader title="Recent Issues Statistics" />
       <Divider />
       <CardContent className={cardStyles.Centered}>
         <BadgedText title="Open" count={openCount} />

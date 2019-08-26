@@ -32,7 +32,7 @@ export default ({ items }: ItemsProps<PullRequest<Date>>): ReactElement => {
   const totalClosedCount = mergedCount + closedCount;
   return (
     <Card className={cardStyles.InformationCard}>
-      <CardHeader title={`Recent Pull Requests Statistics`} />
+      <CardHeader title="Recent Pull Requests Statistics" />
       <Divider />
       <CardContent className={cardStyles.Centered}>
         <BadgedText title="Open" count={openCount} />

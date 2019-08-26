@@ -1,6 +1,8 @@
 # github-query
 
 [![Build Status](https://action-badges.now.sh/SamChou19815/github-query)](https://github.com/SamChou19815/github-query)
+![GitHub](https://img.shields.io/github/license/SamChou19815/github-query.svg)
+![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)
 
 A cross platform tool for querying and displaying GitHub repository metrics.
 
