@@ -5,6 +5,11 @@
   "scripts": {
     "build": "tsc"
   },
+  "files": [
+    "*.js",
+    "*.d.ts",
+    "*.json"
+  ],
   "main": "index.js",
   "dependencies": {
     "firebase-functions": "^3.2.0",

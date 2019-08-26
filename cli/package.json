@@ -7,6 +7,9 @@
     "build": "tsc"
   },
   "main": "index.js",
+  "files": [
+    "index.js"
+  ],
   "dependencies": {
     "github-query-backend": "0.1.0",
     "yargs": "^13.3.0"

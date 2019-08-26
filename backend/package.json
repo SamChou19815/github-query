@@ -6,6 +6,11 @@
     "start": "ts-node src/index.ts",
     "build": "tsc"
   },
+  "files": [
+    "*.js",
+    "*.d.ts",
+    "*.json"
+  ],
   "dependencies": {
     "@google-cloud/firestore": "^2.2.8",
     "firebase-admin": "^8.4.0",
