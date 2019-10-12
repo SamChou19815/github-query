@@ -9,8 +9,7 @@ export default (): ReactElement => (
   <Card className={styles.InformationCard}>
     <CardHeader avatar={<Error />} title="Disclaimer" />
     <CardContent>
-      <b>DO NOT</b>
-      {" completely rely on this tools to decide engineers' performance!"}
+      <b>DO NOT</b> completely rely on this tools to decide engineers&apos; performance!
     </CardContent>
     <CardContent>
       There are important aspects of performance that cannot be decided by this tool, including but
