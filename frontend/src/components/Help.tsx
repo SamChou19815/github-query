@@ -10,16 +10,13 @@ export default (): ReactElement => (
     <Card className={styles.InformationCard}>
       <CardHeader avatar={<Help />} title="Help" />
       <CardContent>
-        {'To query a specific project, go to '}
-        <code>repository/owner/name</code>
-        {'.'}
+        To query a specific project, go to
+        <code>repository/owner/name</code>.
       </CardContent>
       <CardContent>
-        {'For example, if you want to track '}
-        <code>github.com/facebook/react</code>
-        {', the URL should be '}
-        <code>repository/facebook/react</code>
-        {'.'}
+        For example, if you want to track
+        <code>github.com/facebook/react</code>, the URL should be
+        <code>repository/facebook/react</code>.
       </CardContent>
     </Card>
   </div>
