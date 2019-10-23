@@ -18,7 +18,13 @@ jobs:
         run: yarn install
       - name: Prettier
         run: yarn prettier:check
-      - name: Build All
-        run: ./scripts/build-all
+      - name: Build core
+        run: yarn workspace github-query-core build
+      - name: Build cli
+        run: yarn workspace github-query-cli build
+      - name: Build functions
+        run: yarn workspace github-query-functions build
+      - name: Build frontend
+        run: yarn workspace github-query-frontend build
       - name: Lint
         run: yarn lint
