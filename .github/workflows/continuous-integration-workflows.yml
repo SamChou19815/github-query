@@ -8,6 +8,8 @@ jobs:
       - uses: actions/checkout@master
       - name: Set up Node
         uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
       - name: Create Dummy Configuration Files
         run: |
           echo "export const GITHUB_TOKEN = '';" > backend/configuration.ts
@@ -18,7 +20,15 @@ jobs:
         run: yarn install
       - name: Prettier
         run: yarn prettier:check
-      - name: Build All
-        run: ./scripts/build-all
+      - name: Build core
+        run: yarn workspace github-query-core build
+      - name: Build backend
+        run: yarn workspace github-query-backend build
+      - name: Build cli
+        run: yarn workspace github-query-cli build
+      - name: Build functions
+        run: yarn workspace github-query-functions build
+      - name: Build frontend
+        run: yarn workspace github-query-frontend build
       - name: Lint
         run: yarn lint
