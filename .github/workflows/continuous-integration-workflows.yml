@@ -8,6 +8,8 @@ jobs:
       - uses: actions/checkout@master
       - name: Set up Node
         uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
       - name: Create Dummy Configuration Files
         run: |
           echo "export const GITHUB_TOKEN = '';" > backend/configuration.ts
