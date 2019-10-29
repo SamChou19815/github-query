@@ -4,7 +4,8 @@
   "version": "0.1.0",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "clean": "rm index.js index.d.ts"
   },
   "main": "index.js",
   "files": [
