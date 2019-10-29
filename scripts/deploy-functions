@@ -13,29 +13,23 @@ set -x
 yarn install
 yarn workspace github-query-core build
 yarn workspace github-query-backend build
+yarn workspace github-query-functions build:deploy
 
 # Step 2: Setup mirror folders for deployments
 
 mkdir temp
 mkdir temp/functions
-mkdir temp/functions/core
-mkdir temp/functions/backend
 
-# Copy Generated Code
-cp functions/*.json functions/*.js temp/functions/
-cp -r core/*.json core/*.js temp/functions/core/
-cp -r backend/*.json backend/*.js temp/functions/backend/
+# Copy Code For Deployment
+cp -R functions/build/ temp/functions/
+rm -rf functions/build/
+cp functions/functions-package.json temp/functions/package.json
 
 # Copy package.json
 
 echo '{}' >temp/firebase.json
 
-sed -i -e 's/"github-query-backend": "0.1.0"/"github-query-backend": "file:backend"/g' temp/functions/package.json
-sed -i -e 's/"github-query-core": "0.1.0"/"github-query-core": "file:..\/core"/g' temp/functions/backend/package.json
-
-cd temp/functions
-yarn
-cd ../
+cd temp
 firebase deploy --only functions --project developer-sam
 cd ../
 rm -rf temp

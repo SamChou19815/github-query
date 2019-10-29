@@ -3,7 +3,8 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "clean": "rm *.js *.d.ts"
   },
   "files": [
     "*.js",

@@ -3,7 +3,9 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "build:deploy": "ncc build index.ts -o build -m",
+    "clean": "rm -rf build"
   },
   "files": [
     "*.js",
@@ -14,8 +16,5 @@
   "dependencies": {
     "firebase-functions": "^3.3.0",
     "github-query-backend": "0.1.0"
-  },
-  "engines": {
-    "node": ">=10"
   }
 }
