@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "export const GITHUB_TOKEN = '';" > src/backend/configuration.ts
+echo "export const DATABASE_URL = '';" >> src/backend/configuration.ts
+echo "{}" > src/backend/firebase-adminsdk.json
+echo "{}" > src/functions/fetch-configuration.json
