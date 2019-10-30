@@ -21,6 +21,7 @@ export const initialize = (): void => {
 const database = () => admin.firestore();
 
 const REPOSITORY_METADATA_COLLECTION = `github-query-repository-metadata`;
+const REPOSITORY_OBJECT_COLLECTION = `github-query-repository-objects`;
 
 // Used to overcome 500 item per batch limit
 const batchedWrite = async <T>(
@@ -48,33 +49,28 @@ export const update = async (repositoryId: string, repository: Repository<Date>)
     batchedWrite(issues, (batch, issue) =>
       batch.set(
         database()
-          .collection(`github-query-${repositoryId}-issues`)
+          .collection(REPOSITORY_OBJECT_COLLECTION)
           .doc(`${repositoryId}-${issue.number}`),
-        {
-          repositoryId,
-          ...issue
-        }
+        { repositoryId, type: 'issue', ...issue }
       )
     ),
     batchedWrite(pullRequests, (batch, pullRequest) =>
       batch.set(
         database()
-          .collection(`github-query-${repositoryId}-pull-requests`)
+          .collection(REPOSITORY_OBJECT_COLLECTION)
           .doc(`${repositoryId}-${pullRequest.number}`),
-        { repositoryId, ...pullRequest }
+        { repositoryId, type: 'pull-request', ...pullRequest }
       )
     ),
-    batchedWrite(commits, (batch, commit) =>
+    batchedWrite(commits, (batch, commit) => {
+      const number = commit.pushedDate.getTime();
       batch.set(
         database()
-          .collection(`github-query-${repositoryId}-commits`)
-          .doc(`${repositoryId}-${commit.id}`),
-        {
-          repositoryId,
-          ...commit
-        }
-      )
-    )
+          .collection(REPOSITORY_OBJECT_COLLECTION)
+          .doc(`${repositoryId}-${number}`),
+        { repositoryId, type: 'commit', number, ...commit }
+      );
+    })
   ]);
 };
 
@@ -90,20 +86,29 @@ export const readRecent = async (repositoryId: string): Promise<Repository<Date>
   }
   // We setup database in this way to avoid manually maintain indices.
   const issuesPromise = database()
-    .collection(`github-query-${repositoryId}-issues`)
+    .collection(REPOSITORY_OBJECT_COLLECTION)
+    .where('repositoryId', '==', repositoryId)
+    .where('type', '==', 'issue')
+    .where('number', '>=', 0)
     .orderBy('number', 'desc')
     .limit(limit)
     .get()
     .then(snapshot => snapshot.docs.map(document => document.data() as Issue<Timestamp>));
   const pullRequestsPromise = database()
-    .collection(`github-query-${repositoryId}-pull-requests`)
+    .collection(REPOSITORY_OBJECT_COLLECTION)
+    .where('repositoryId', '==', repositoryId)
+    .where('type', '==', 'pull-request')
+    .where('number', '>=', 0)
     .orderBy('number', 'desc')
     .limit(limit)
     .get()
     .then(snapshot => snapshot.docs.map(document => document.data() as PullRequest<Timestamp>));
   const commitsPromise = database()
-    .collection(`github-query-${repositoryId}-commits`)
-    .orderBy('pushedDate', 'desc')
+    .collection(REPOSITORY_OBJECT_COLLECTION)
+    .where('repositoryId', '==', repositoryId)
+    .where('type', '==', 'commit')
+    .where('number', '>=', 0)
+    .orderBy('number', 'desc')
     .limit(limit)
     .get()
     .then(snapshot => snapshot.docs.map(document => document.data() as Commit<Timestamp>));

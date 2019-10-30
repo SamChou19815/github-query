@@ -98,6 +98,9 @@ Options:
 firebase deploy --only hosting
 ```
 
+During the first scheduled fetch, the function will fail due to lack of composite index. Simply
+follow the URL in the error message to create the index.
+
 ## Architecture Overview
 
 The project is written in pure TypeScript and built by Yarn using its workspace feature.
