@@ -5,7 +5,6 @@ set -x
 yarn install
 yarn workspace github-query-core build
 yarn workspace github-query-backend build
-yarn workspace github-query-cli build
 # optional if you don't care about deployment
 yarn workspace github-query-functions build
 yarn workspace github-query-frontend build

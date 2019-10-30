@@ -3,5 +3,12 @@
   "compilerOptions": {
     "incremental": true
   },
-  "files": ["configuration.ts", "database.ts", "client.ts", "index.ts", "firebase-adminsdk.json"]
+  "files": [
+    "cli.ts",
+    "client.ts",
+    "configuration.ts",
+    "database.ts",
+    "index.ts",
+    "firebase-adminsdk.json"
+  ]
 }
