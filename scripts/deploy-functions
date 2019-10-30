@@ -11,8 +11,6 @@ set -x
 # Step 1: Build All Projects
 
 yarn install
-yarn workspace github-query-core build
-yarn workspace github-query-backend build
 yarn workspace github-query-functions build:deploy
 
 # Step 2: Setup mirror folders for deployments

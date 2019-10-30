@@ -3,8 +3,9 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
+    "prebuild": "yarn workspace github-query-backend build",
     "build": "tsc",
-    "build:deploy": "ncc build index.ts -o build -m",
+    "build:deploy": "yarn build && ncc build index.js -o build -m",
     "clean": "rm -rf build"
   },
   "files": [
