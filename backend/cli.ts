@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import * as yargs from 'yargs';
-import * as backend from 'github-query-backend';
+import { initialize } from './database';
+import { fetchAllAndRecord, fetchRecentAndRecord } from '.';
 
 function main() {
   const { owner, name, recent } = yargs
@@ -22,21 +23,19 @@ function main() {
     return;
   }
 
-  backend.initializeFirestore();
+  initialize();
   if (recent) {
     console.log('Fetching with limit');
-    backend
-      .fetchRecentAndRecord({
-        owner,
-        name,
-        issuesLimit: 100,
-        pullRequestsLimit: 100,
-        commitHistoryLimit: 100
-      })
-      .then(console.log);
+    fetchRecentAndRecord({
+      owner,
+      name,
+      issuesLimit: 100,
+      pullRequestsLimit: 100,
+      commitHistoryLimit: 100
+    }).then(console.log);
   } else {
     console.log('Fetching all...');
-    backend.fetchAllAndRecord(owner, name).then(console.log);
+    fetchAllAndRecord(owner, name).then(console.log);
   }
 }
 

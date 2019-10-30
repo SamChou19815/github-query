@@ -8,7 +8,6 @@
   },
   "workspaces": [
     "backend",
-    "cli",
     "core",
     "frontend",
     "functions"

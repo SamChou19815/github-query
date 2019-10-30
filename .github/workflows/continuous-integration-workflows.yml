@@ -24,8 +24,6 @@ jobs:
         run: yarn workspace github-query-core build
       - name: Build backend
         run: yarn workspace github-query-backend build
-      - name: Build cli
-        run: yarn workspace github-query-cli build
       - name: Build functions
         run: yarn workspace github-query-functions build
       - name: Build frontend
