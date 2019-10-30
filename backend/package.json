@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "ts-node src/index.ts",
+    "prebuild": "yarn workspace github-query-core build",
     "build": "tsc",
     "clean": "rm *.js *.d.ts"
   },
