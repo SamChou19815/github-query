@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import * as functions from 'firebase-functions';
-import { initializeFirestore, fetchRecentAndRecord, readRecent } from 'github-query-backend';
+import { initializeFirestore, fetchRecentAndRecord, readRecent } from '../backend';
 import * as configuration from './fetch-configuration.json';
 
 initializeFirestore();

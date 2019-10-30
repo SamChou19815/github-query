@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-import { Commit } from 'github-query-core';
+import { Commit } from '../../core/processed-types';
 import BadgedText from './BadgedText';
 import NumbersByAuthor from './NumbersByAuthor';
 import { ItemsProps } from './types';

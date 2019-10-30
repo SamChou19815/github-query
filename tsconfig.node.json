@@ -1,13 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "module": "commonjs",
-    "lib": ["dom", "es2016"],
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
     "declaration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "jsx": "preserve",
+    "lib": ["dom", "es2019"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "resolveJsonModule": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true
+    "target": "es2015",
+    "tsBuildInfoFile": "tsbuildinfo.node.json"
   },
-  "exclude": []
+  "include": ["src/"],
+  "exclude": ["src/index.tsx", "src/frontend"]
 }

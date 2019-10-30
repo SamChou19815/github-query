@@ -1,4 +1,4 @@
-import { Repository } from 'github-query-core';
+import { Repository } from '../core/processed-types';
 import { fetchRecent, fetchAll, RequestConfiguration } from './client';
 import {
   initialize as initializeFirestore,

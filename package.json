@@ -1,22 +1,44 @@
 {
+  "name": "github-query",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
+    "build:backend": "tsc -p tsconfig.node.json",
+    "build:frontend": "react-scripts build",
+    "build:functions": "yarn build:backend && ncc build dist/functions/index.js -o functions-build -m",
+    "eject:frontend": "react-scripts eject",
+    "lint": "eslint . --ext .ts --ext .tsx",
+    "lint:fix": "yarn lint --fix",
     "prettier": "prettier --write '**/*.{ts,tsx,scss,css,html}'",
     "prettier:check": "prettier --check '**/*.{ts,tsx,scss,css,html}'",
-    "lint": "eslint . --ext .ts --ext .tsx",
-    "lint:fix": "yarn lint --fix"
+    "start:frontend": "react-scripts start",
+    "test:frontend": "react-scripts test"
   },
-  "workspaces": [
-    "backend",
-    "core",
-    "frontend",
-    "functions"
-  ],
+  "dependencies": {
+    "@google-cloud/firestore": "^2.5.0",
+    "@material-ui/core": "^4.5.2",
+    "@material-ui/icons": "^4.5.1",
+    "firebase-admin": "^8.6.1",
+    "firebase-functions": "^3.3.0",
+    "graphql-request": "^1.8.2",
+    "node-fetch": "^2.6.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-redux": "^7.1.0",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.1.2",
+    "redux": "^4.0.4",
+    "yargs": "^14.2.0"
+  },
   "devDependencies": {
     "@types/jest": "^24.0.20",
     "@types/node": "^12.11.7",
+    "@types/node-fetch": "^2.5.2",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.3",
+    "@types/react-redux": "^7.1.5",
+    "@types/react-router-dom": "^5.1.0",
+    "@types/yargs": "^13.0.3",
     "@typescript-eslint/eslint-plugin": "^2.6.0",
     "@typescript-eslint/parser": "^2.6.0",
     "@zeit/ncc": "^0.20.5",
@@ -33,5 +55,18 @@
     "react-scripts": "3.2.0",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.4"
-  }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "https://us-central1-developer-sam.cloudfunctions.net/GithubQueryHandleClientRequest"
 }

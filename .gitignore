@@ -2,16 +2,17 @@
 .DS_Store
 
 # Build
-**/node_modules/
-**/build/
+node_modules/
+build/
+dist/
 *.js
-*.tsbuildinfo
+tsbuildinfo.node.json
 *.d.ts
 
 # Configurations
-backend/configuration.ts
-backend/firebase-adminsdk.json
-functions/fetch-configuration.json
+src/backend/configuration.ts
+src/backend/firebase-adminsdk.json
+src/functions/fetch-configuration.json
 
 # Firebase
 .firebase

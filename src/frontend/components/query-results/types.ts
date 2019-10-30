@@ -1,4 +1,4 @@
-import { Repository } from 'github-query-core';
+import { Repository } from '../../core/processed-types';
 
 export type RepositoryId = { readonly owner: string; readonly name: string };
 
