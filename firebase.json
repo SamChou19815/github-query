@@ -2,7 +2,7 @@
   "hosting": [
     {
       "target": "github-query",
-      "public": "frontend/build",
+      "public": "build",
       "ignore": ["**/.*"],
       "rewrites": [
         {
