@@ -12,21 +12,17 @@ jobs:
           node-version: '12.x'
       - name: Create Dummy Configuration Files
         run: |
-          echo "export const GITHUB_TOKEN = '';" > backend/configuration.ts
-          echo "export const DATABASE_URL = '';" >> backend/configuration.ts
-          echo "{}" > backend/firebase-adminsdk.json
-          echo "{}" > functions/fetch-configuration.json
+          echo "export const GITHUB_TOKEN = '';" > src/backend/configuration.ts
+          echo "export const DATABASE_URL = '';" >> src/backend/configuration.ts
+          echo "{}" > src/backend/firebase-adminsdk.json
+          echo "{}" > src/functions/fetch-configuration.json
       - name: Yarn Install
         run: yarn install
       - name: Prettier
         run: yarn prettier:check
-      - name: Build core
-        run: yarn workspace github-query-core build
-      - name: Build backend
-        run: yarn workspace github-query-backend build
-      - name: Build functions
-        run: yarn workspace github-query-functions build
-      - name: Build frontend
-        run: yarn workspace github-query-frontend build
       - name: Lint
         run: yarn lint
+      - name: Build backend
+        run: yarn build:backend
+      - name: Build frontend
+        run: yarn build:frontend

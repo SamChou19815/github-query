@@ -1,15 +1,15 @@
 import * as admin from 'firebase-admin';
 import { WriteBatch, Timestamp } from '@google-cloud/firestore';
+import { processRepository } from '../core/processor';
 import {
-  processRepository,
   Repository,
   RepositoryMetadata,
   Issue,
   PullRequest,
   Commit
-} from 'github-query-core';
+} from '../core/processed-types';
 import * as serviceAccount from './firebase-adminsdk.json';
-import { DATABASE_URL } from './configuration.js';
+import { DATABASE_URL } from './configuration';
 
 export const initialize = (): void => {
   admin.initializeApp({

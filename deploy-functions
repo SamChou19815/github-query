@@ -4,14 +4,14 @@
 # to fetch code outside of functions folder.
 
 # This script should be run from project root like
-# ./scripts/deploy-functions [project name]
+# ./deploy-functions
 
 set -x
 
 # Step 1: Build All Projects
 
 yarn install
-yarn workspace github-query-functions build:deploy
+yarn build:functions
 
 # Step 2: Setup mirror folders for deployments
 
@@ -19,9 +19,9 @@ mkdir temp
 mkdir temp/functions
 
 # Copy Code For Deployment
-cp -R functions/build/ temp/functions/
-rm -rf functions/build/
-cp functions/functions-package.json temp/functions/package.json
+cp -R functions-build/ temp/functions/
+rm -rf functions-build/
+cp functions-package.json temp/functions/package.json
 
 # Copy package.json
 

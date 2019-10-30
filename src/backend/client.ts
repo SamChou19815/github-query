@@ -1,5 +1,7 @@
 import { GraphQLClient } from 'graphql-request';
-import { Response, Repository, processClientResponse } from 'github-query-core';
+import { processClientResponse } from '../core/processor';
+import { Response } from '../core/response-types';
+import { Repository } from '../core/processed-types';
 import { GITHUB_TOKEN } from './configuration';
 
 const ENDPOINT = 'https://api.github.com/graphql';
