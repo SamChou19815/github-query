@@ -105,10 +105,9 @@ The project is written in pure TypeScript and built by Yarn using its workspace 
 - `core/` contains type definitions and pure object processor functions. This is the foundation for
   all packages below.
 - `backend/` contains the code to fetch data from GitHub GraphQL API, storing and fetching them into
-  Firestore. This is the foundation for CLI and Firebase Functions.
-- `cli/` contains a simple CLI tool that allows you to fetch and store all or part of the GitHub
-  repository history and store them to the database. `./github-query-cli` at the root is its simple
-  bash script wrapper.
+  Firestore. This is the foundation for CLI and Firebase Functions. It also contains a simple CLI
+  tool that allows you to fetch and store all or part of the GitHub repository history and store
+  them to the database. `./github-query-cli` at the root is its simple bash script wrapper.
 - `functions/` contains some Firebase functions that maintains the database on the backend.
   Currently, it can fetch data periodically and serve all recent data to the client.
 - `frontend/` contains all the frontend code that displays and computes metrics for users.
