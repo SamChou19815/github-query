@@ -18,7 +18,7 @@ A cross platform tool for querying and displaying GitHub repository metrics.
 
 #### GitHub Personal Access Token
 
-Create `backend/configuration.ts` with content:
+Create `src/backend/configuration.ts` with content:
 
 ```typescript
 /*
@@ -38,11 +38,11 @@ export const DATABASE_URL = '[Your Firebase Database URL]';
 #### Firebase Admin SDK
 
 1. Create a Firebase project and enable Cloud Firestore.
-2. Download your admin SDK json and put it in `backend/firebase-adminsdk.json`
+2. Download your admin SDK json and put it in `src/backend/firebase-adminsdk.json`
 
 #### Watching Repository Configuration
 
-Create `functions/fetch-configuration.json` with content like:
+Create `src/functions/fetch-configuration.json` with content like:
 
 ```json
 {
@@ -67,16 +67,13 @@ When you update the json, you need to redeploy the functions again.
 ### Installation
 
 ```bash
-./scripts/build-all
+yarn
 ```
 
 ### CLI
 
-```bash
-./github-query-cli
-```
-
-```plaintext
+```terminal
+$ ./github-query-cli
 Options:
   --version  Show version number                                       [boolean]
   --owner    Owner of the repository. e.g. facebook                   [required]
@@ -88,12 +85,12 @@ Options:
 ### Deployment
 
 1. Setup Firebase for yourself
-2. Edit `.firebaserc`, `firebase.json`, and `scripts/deploy-functions` to use your project ID.
+2. Edit `.firebaserc`, `firebase.json`, and `deploy-functions` to use your project ID.
 3. Run
 
 ```bash
 # Deploy functions
-./scripts/deploy-functions
+./deploy-functions
 # Deploy frontend (need to install first)
 firebase deploy --only hosting
 ```
@@ -103,18 +100,17 @@ follow the URL in the error message to create the index.
 
 ## Architecture Overview
 
-The project is written in pure TypeScript and built by Yarn using its workspace feature.
+The project is written in pure TypeScript and built by Yarn.
 
-- `core/` contains type definitions and pure object processor functions. This is the foundation for
-  all packages below.
-- `backend/` contains the code to fetch data from GitHub GraphQL API, storing and fetching them into
-  Firestore. This is the foundation for CLI and Firebase Functions. It also contains a simple CLI
-  tool that allows you to fetch and store all or part of the GitHub repository history and store
+- `src/core/` contains type definitions and pure object processor functions. This is the foundation
+  for all other modules below.
+- `src/backend/` contains the code to fetch data from GitHub GraphQL API, storing and fetching them
+  into Firestore. This is the foundation for CLI and Firebase Functions. It also contains a simple
+  CLI tool that allows you to fetch and store all or part of the GitHub repository history and store
   them to the database. `./github-query-cli` at the root is its simple bash script wrapper.
-- `functions/` contains some Firebase functions that maintains the database on the backend.
+- `src/functions/` contains some Firebase functions that maintains the database on the backend.
   Currently, it can fetch data periodically and serve all recent data to the client.
-- `frontend/` contains all the frontend code that displays and computes metrics for users.
-- `scripts/` contains all scripts to aid development and deployments.
+- `src/frontend/` contains all the frontend code that displays and computes metrics for users.
 
 ## FAQ
 
