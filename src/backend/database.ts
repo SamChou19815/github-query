@@ -117,6 +117,8 @@ export const readRecent = async (repositoryId: string): Promise<Repository<Date>
     pullRequestsPromise,
     commitsPromise
   ]);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
   return processRepository({ issues, pullRequests, commits, ...metadata }, (timestamp: Timestamp) =>
     timestamp.toDate()
   );
