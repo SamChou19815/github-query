@@ -74,5 +74,6 @@ export default (props: RouteComponentProps): ReactElement => {
       </div>
     );
   }
+  // eslint-disable-next-line react/jsx-props-no-spreading
   return <QueryResultDisplay {...repository} />;
 };
