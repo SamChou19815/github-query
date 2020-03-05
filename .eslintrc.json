@@ -1,3 +1,8 @@
 {
-  "extends": ["@dev-sam/common"]
+  "extends": ["@dev-sam/common"],
+  "settings": {
+    "react": {
+      "version": "16"
+    }
+  }
 }

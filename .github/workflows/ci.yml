@@ -18,19 +18,5 @@ jobs:
         run: yarn format:check
       - name: Lint
         run: yarn lint
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Set up Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-      - name: Create Dummy Files
-        run: ./create-dummy
-      - name: Yarn Install
-        run: yarn install
-      - name: Build backend
-        run: yarn build:backend
-      - name: Build frontend
-        run: yarn build:frontend
+      - name: Type Check
+        run: yarn build

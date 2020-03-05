@@ -1,6 +1,6 @@
 # github-query
 
-[![Build Status](https://action-badges.now.sh/SamChou19815/github-query)](https://github.com/SamChou19815/github-query)
+[![Build Status](https://github.com/SamChou19815/github-query/workflows/CI/badge.svg)](https://github.com/SamChou19815/github-query)
 ![GitHub](https://img.shields.io/github/license/SamChou19815/github-query.svg)
 ![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)
 
@@ -16,9 +16,7 @@ A cross platform tool for querying and displaying GitHub repository metrics.
 
 ### Configuration
 
-#### GitHub Personal Access Token
-
-Create `src/backend/configuration.ts` with content:
+Create `src/data/github-token.ts` with content:
 
 ```typescript
 /*
@@ -31,38 +29,8 @@ Create `src/backend/configuration.ts` with content:
  * - read:user
  * - user:email
  */
-export const GITHUB_TOKEN = '[Your GitHub personal access token]';
-export const DATABASE_URL = '[Your Firebase Database URL]';
+export default '[Your GitHub personal access token]';
 ```
-
-#### Firebase Admin SDK
-
-1. Create a Firebase project and enable Cloud Firestore.
-2. Download your admin SDK json and put it in `src/backend/firebase-adminsdk.json`
-
-#### Watching Repository Configuration
-
-Create `src/functions/fetch-configuration.json` with content like:
-
-```json
-{
-  "limit": 100,
-  "frequency": "every 60 minutes",
-  "repositories": [
-    { "owner": "facebook", "name": "react" },
-    { "owner": "microsoft", "name": "TypeScript" },
-    { "owner": "SamChou19815", "name": "samlang" }
-  ]
-}
-```
-
-This json decides the repositories you want to watch.
-The functions do not ensure automatically that you get the full history of a repository, so you
-may need to treak the value of `limit` and `frequency` to ensure that. The syntax of `frequency`
-is specified in this
-[Google Cloud Docs](https://cloud.google.com/appengine/docs/standard/python/config/cronref#schedule_format).
-
-When you update the json, you need to redeploy the functions again.
 
 ### Installation
 
@@ -76,58 +44,7 @@ yarn
 $ ./github-query-cli
 Options:
   --version  Show version number                                       [boolean]
-  --owner    Owner of the repository. e.g. facebook                   [required]
-  --name     Name of the repository. e.g. react                       [required]
+  --repo     Path to the repository. e.g. facebook/react              [required]
   --recent   Only fetch recent information.           [boolean] [default: false]
   --help     Show help                                                 [boolean]
 ```
-
-### Deployment
-
-1. Setup Firebase for yourself
-2. Edit `.firebaserc`, `firebase.json`, and `deploy-functions` to use your project ID.
-3. Run
-
-```bash
-# Deploy functions
-./deploy-functions
-# Deploy frontend (need to install first)
-firebase deploy --only hosting
-```
-
-During the first scheduled fetch, the function will fail due to lack of composite index. Simply
-follow the URL in the error message to create the index.
-
-## Architecture Overview
-
-The project is written in pure TypeScript and built by Yarn.
-
-- `src/core/` contains type definitions and pure object processor functions. This is the foundation
-  for all other modules below.
-- `src/backend/` contains the code to fetch data from GitHub GraphQL API, storing and fetching them
-  into Firestore. This is the foundation for CLI and Firebase Functions. It also contains a simple
-  CLI tool that allows you to fetch and store all or part of the GitHub repository history and store
-  them to the database. `./github-query-cli` at the root is its simple bash script wrapper.
-- `src/functions/` contains some Firebase functions that maintains the database on the backend.
-  Currently, it can fetch data periodically and serve all recent data to the client.
-- `src/frontend/` contains all the frontend code that displays and computes metrics for users.
-
-## FAQ
-
-Q: Why NodeJS?
-
-A: To easily deal with JSON.
-
-Q: Why TypeScript?
-
-A: Static typing boosts my productivity and ensures that less things can go wrong.
-
-Q: Is there a NPM package for this?
-
-A: No. The product is far from complete according to my expectation. Versioning everything on NPM
-creates too much overhead for me.
-
-Q: I messed up my database, what should I do?
-
-A: Simply wipe it and use the CLI to collect everything again. The database layer is designed in
-a way that everything can be safely overridden.

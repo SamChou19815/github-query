@@ -2,7 +2,7 @@ import { GraphQLClient } from 'graphql-request';
 import { processClientResponse } from '../core/processor';
 import { Response } from '../core/response-types';
 import { Repository } from '../core/processed-types';
-import { GITHUB_TOKEN } from './configuration';
+import GITHUB_TOKEN from './github-token';
 
 const ENDPOINT = 'https://api.github.com/graphql';
 
