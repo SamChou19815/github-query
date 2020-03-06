@@ -1,3 +1,0 @@
-#!/bin/bash
-
-echo "export default '';" > src/data/github-token.ts

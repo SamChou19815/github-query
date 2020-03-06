@@ -11,7 +11,7 @@ jobs:
         with:
           node-version: '12.x'
       - name: Create Dummy Files
-        run: ./create-dummy
+        run: echo "export default '${{ secrets.GITHUB_TOKEN }}';" > src/data/github-token.ts
       - name: Yarn Install
         run: yarn install
       - name: Prettier
