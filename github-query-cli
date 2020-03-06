@@ -1,2 +1,2 @@
 #!/bin/bash
-node dist/backend/cli.js "$@"
+node dist/index.js "$@"

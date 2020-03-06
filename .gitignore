@@ -6,16 +6,15 @@ node_modules/
 build/
 dist/
 *.js
-tsbuildinfo.node.json
+tsbuildinfo.json
 *.d.ts
 
 # Configurations
-src/backend/configuration.ts
-src/backend/firebase-adminsdk.json
-src/functions/fetch-configuration.json
+src/data/github-token.ts
 
-# Firebase
-.firebase
+## Local Database
+local-database/*
+!local-database/.gitkeep
 
 # Editor
 .vscode/
