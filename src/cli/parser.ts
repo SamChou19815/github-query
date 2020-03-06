@@ -37,7 +37,7 @@ const parseToRawOptions = (zeroIndexedArguments: readonly string[]): MutableRawO
       lastOption = optionName;
     } else {
       rawOptions.presented.add(lastOption);
-      lastOption = null;
+      lastOption = optionName;
     }
   });
   if (lastOption !== null) {
