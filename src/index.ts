@@ -47,7 +47,10 @@ function main() {
   console.log(`Fetching data for \`${repo}\`...`);
   fetcher(owner, name)
     .then(analyze)
-    .catch(() => console.error(`Unable to fetch data for ${repo}.`));
+    .catch(() => {
+      console.error(`Unable to fetch data for ${repo}.`);
+      process.exit(1);
+    });
 }
 
 main();
