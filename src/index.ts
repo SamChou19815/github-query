@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import chalk from 'chalk';
 import {
   Fetcher,
   freshFetchAllAndStore,
@@ -30,8 +31,7 @@ async function main() {
       continue;
     }
     const [owner, name] = repoParts;
-    console.group(repo);
-    console.log(`Fetching data...`);
+    console.group(chalk.green(repo));
     try {
       // eslint-disable-next-line no-await-in-loop
       const repository = await fetcher(owner, name);
