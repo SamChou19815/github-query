@@ -9,13 +9,18 @@ interface PullRequestHealthStatistics extends AnalysisResult {
   readonly mostOptimisticAverageCloseDays: number;
 }
 
-export default ({ issues }: Repository<Date>): PullRequestHealthStatistics => {
+export default (
+  { issues }: Repository<Date>,
+  afterDate: Date | null
+): PullRequestHealthStatistics => {
   let openIssueCount = 0;
   let closedIssueCount = 0;
   let closedTotalOpenTime = 0;
   let allTotalOpenTime = 0;
   const currentTime = new Date().getTime();
-  issues.forEach(({ state, createdAt, closedAt }) => {
+  const filteredIssues =
+    afterDate === null ? issues : issues.filter(({ createdAt }) => createdAt >= afterDate);
+  filteredIssues.forEach(({ state, createdAt, closedAt }) => {
     switch (state) {
       case 'OPEN':
         openIssueCount += 1;

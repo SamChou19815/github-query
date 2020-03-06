@@ -13,7 +13,10 @@ interface PullRequestHealthStatistics extends AnalysisResult {
   readonly mostOptimisticAverageCloseDays: number;
 }
 
-export default ({ pullRequests }: Repository<Date>): PullRequestHealthStatistics => {
+export default (
+  { pullRequests }: Repository<Date>,
+  afterDate: Date | null
+): PullRequestHealthStatistics => {
   let openPullRequestCount = 0;
   let mergedPullRequestCount = 0;
   let closedPullRequestCount = 0;
@@ -22,7 +25,11 @@ export default ({ pullRequests }: Repository<Date>): PullRequestHealthStatistics
   let closedTotalOpenTime = 0;
   let allTotalOpenTime = 0;
   const currentTime = new Date().getTime();
-  pullRequests.forEach(({ state, createdAt, closedAt }) => {
+  const filteredPullRequests =
+    afterDate === null
+      ? pullRequests
+      : pullRequests.filter(({ createdAt }) => createdAt >= afterDate);
+  filteredPullRequests.forEach(({ state, createdAt, closedAt }) => {
     switch (state) {
       case 'OPEN':
         openPullRequestCount += 1;

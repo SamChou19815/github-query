@@ -9,10 +9,10 @@ const allAnalysis: { readonly [analysisName: string]: Analysis } = {
   PullRequestHealthAnalysis
 };
 
-const analyze = (repository: Repository<Date>): void => {
+const analyze = (repository: Repository<Date>, afterDate: Date | null): void => {
   Object.entries(allAnalysis).forEach(([analysisName, analysisFunction]) => {
     console.group(analysisName);
-    const result = analysisFunction(repository);
+    const result = analysisFunction(repository, afterDate);
     Object.entries(result).forEach(([metricName, metricResult]) => {
       console.log(`${metricName}: ${metricResult}`);
     });
