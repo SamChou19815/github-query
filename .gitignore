@@ -12,9 +12,11 @@ tsbuildinfo.json
 # Configurations
 src/data/github-token.ts
 
-## Local Database
+## Local Data
 local-database/*
 !local-database/.gitkeep
+local-scripts/*
+!local-scripts/.gitkeep
 
 # Editor
 .vscode/
