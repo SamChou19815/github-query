@@ -17,8 +17,6 @@ export type RequestConfiguration = {
   readonly issuesCursor?: string;
   readonly pullRequestsLimit: number;
   readonly pullRequestsCursor?: string;
-  readonly commitHistoryLimit: number;
-  readonly commitHistoryCursor?: string;
 };
 
 const beforeArgument = (before?: string): string => (before == null ? '' : `, before: "${before}"`);
@@ -67,52 +65,10 @@ const pullRequestsQuery = (pullRequestsLimit: number, before?: string): string =
   }
 `;
 
-const commitQuery = (commitHistoryLimit: number, after?: string): string => `
-  object(expression: "master") {
-    ... on Commit {
-      history(first: ${commitHistoryLimit}${after == null ? '' : `, after: "${after}"`}) {
-        totalCount
-        pageInfo {
-          endCursor
-        }
-        nodes {
-          id
-          message
-          additions
-          deletions
-          author {
-            user {
-              login
-            }
-          }
-          associatedPullRequests(last: 1) {
-            nodes {
-              title
-              number
-            }
-          }
-          committedDate
-          changedFiles
-          pushedDate
-          status {
-            state
-          }
-          signature {
-            isValid
-          }
-          committedDate
-          pushedDate
-        }
-      }
-    }
-  }
-`;
-
 type RecentRepositoryInformation = {
   readonly repository: Repository<Date>;
   readonly issuesCursor?: string;
   readonly pullRequestsCursor?: string;
-  readonly commitHistoryCursor?: string;
 };
 
 export const fetchRecent = async ({
@@ -121,9 +77,7 @@ export const fetchRecent = async ({
   issuesLimit,
   issuesCursor,
   pullRequestsLimit,
-  pullRequestsCursor,
-  commitHistoryLimit,
-  commitHistoryCursor
+  pullRequestsCursor
 }: RequestConfiguration): Promise<RecentRepositoryInformation> => {
   const query = `
   query {
@@ -136,7 +90,6 @@ export const fetchRecent = async ({
       pushedAt
       ${issuesQuery(issuesLimit, issuesCursor)}
       ${pullRequestsQuery(pullRequestsLimit, pullRequestsCursor)}
-      ${commitQuery(commitHistoryLimit, commitHistoryCursor)}
     }
   }
   `;
@@ -146,8 +99,7 @@ export const fetchRecent = async ({
   return {
     repository,
     issuesCursor: rawRepository.issues.pageInfo.endCursor,
-    pullRequestsCursor: rawRepository.pullRequests.pageInfo.endCursor,
-    commitHistoryCursor: rawRepository.object.history.pageInfo.endCursor
+    pullRequestsCursor: rawRepository.pullRequests.pageInfo.endCursor
   };
 };
 
@@ -157,21 +109,18 @@ export const fetchAll = async (owner: string, name: string): Promise<Repository<
     owner,
     name,
     issuesLimit: LIMIT,
-    pullRequestsLimit: LIMIT,
-    commitHistoryLimit: LIMIT
+    pullRequestsLimit: LIMIT
   });
   const { repository } = information;
-  let { issuesCursor, pullRequestsCursor, commitHistoryCursor } = information;
-  const { issues, pullRequests, commits, ...repositoryMetadata } = repository;
+  let { issuesCursor, pullRequestsCursor } = information;
+  const { issues, pullRequests, ...repositoryMetadata } = repository;
   const issueList = [...issues];
   const pullRequestList = [...pullRequests];
-  const commitList = [...commits];
-  while (issuesCursor != null || pullRequestsCursor != null || commitHistoryCursor != null) {
+  while (issuesCursor != null || pullRequestsCursor != null) {
     const {
-      repository: { issues: newIssues, pullRequests: newPullRequests, commits: newCommits },
+      repository: { issues: newIssues, pullRequests: newPullRequests },
       issuesCursor: newIssuesCursor,
-      pullRequestsCursor: newPullRequestsCursor,
-      commitHistoryCursor: newCommitHistoryCursor
+      pullRequestsCursor: newPullRequestsCursor
       // eslint-disable-next-line no-await-in-loop
     } = await fetchRecent({
       owner,
@@ -179,23 +128,17 @@ export const fetchAll = async (owner: string, name: string): Promise<Repository<
       issuesLimit: issuesCursor == null ? 0 : LIMIT,
       issuesCursor,
       pullRequestsLimit: pullRequestsCursor == null ? 0 : LIMIT,
-      pullRequestsCursor,
-      commitHistoryLimit: commitHistoryCursor == null ? 0 : LIMIT,
-      commitHistoryCursor
+      pullRequestsCursor
     });
     issueList.push(...newIssues);
     pullRequestList.push(...newPullRequests);
-    commitList.push(...newCommits);
     issuesCursor = issueList.length < repository.issuesCount ? newIssuesCursor : undefined;
     pullRequestsCursor =
       pullRequestList.length < repository.pullRequestsCount ? newPullRequestsCursor : undefined;
-    commitHistoryCursor =
-      commitList.length < repository.commitsCount ? newCommitHistoryCursor : undefined;
   }
   return {
     issues: issueList,
     pullRequests: pullRequestList,
-    commits: commitList,
     ...repositoryMetadata
   };
 };

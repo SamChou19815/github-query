@@ -16,8 +16,7 @@ export const freshFetchRecentAndStore: Fetcher = (
     owner,
     name,
     issuesLimit: 100,
-    pullRequestsLimit: 100,
-    commitHistoryLimit: 100
+    pullRequestsLimit: 100
   }).then(({ repository }) => {
     store(`${owner}-${name}-recent`, repository);
     return repository;
