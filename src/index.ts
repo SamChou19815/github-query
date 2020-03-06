@@ -10,17 +10,24 @@ import {
 import analyze from './analysis';
 
 function main() {
-  const { repo, recent, fresh } = yargs
+  const { repo, after, recent, fresh } = yargs
     .option('repo', {
       demandOption: true,
+      type: 'string',
       description: 'Path to the repository. e.g. facebook/react'
     })
+    .option('after', {
+      type: 'string',
+      description: 'Only consider objects after this specified time. e.g. 2020-02-02'
+    })
     .option('recent', {
+      type: 'boolean',
       default: false,
       description: 'Only get recent information.'
     })
     .boolean('recent')
     .option('fresh', {
+      type: 'boolean',
       default: false,
       description: 'Force fetching new data.'
     })
@@ -38,6 +45,13 @@ function main() {
   }
   const [owner, name] = repoParts;
 
+  let afterDate: Date | null;
+  if (typeof after === 'string') {
+    afterDate = new Date(after);
+  } else {
+    afterDate = null;
+  }
+
   let fetcher: Fetcher;
   if (recent) {
     fetcher = fresh ? freshFetchRecentAndStore : getRecent;
@@ -46,7 +60,7 @@ function main() {
   }
   console.log(`Fetching data for \`${repo}\`...`);
   fetcher(owner, name)
-    .then(analyze)
+    .then(repository => analyze(repository, afterDate))
     .catch(() => {
       console.error(`Unable to fetch data for ${repo}.`);
       process.exit(1);

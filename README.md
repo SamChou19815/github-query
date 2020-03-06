@@ -44,7 +44,10 @@ yarn
 $ ./github-query-cli
 Options:
   --version  Show version number                                       [boolean]
-  --repo     Path to the repository. e.g. facebook/react              [required]
-  --recent   Only fetch recent information.           [boolean] [default: false]
+  --repo     Path to the repository. e.g. facebook/react     [string] [required]
+  --after    Only consider objects after this specified time. e.g. 2020-02-02
+                                                                        [string]
+  --recent   Only get recent information.             [boolean] [default: false]
+  --fresh    Force fetching new data.                 [boolean] [default: false]
   --help     Show help                                                 [boolean]
 ```
