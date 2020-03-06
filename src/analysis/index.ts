@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import chalk from 'chalk';
 import { Analysis } from './analysis-common';
 import IssueHealthAnalysis from './analysis-issue-health';
 import PullRequestHealthAnalysis from './analysis-pr-health';
@@ -11,7 +12,7 @@ const allAnalysis: { readonly [analysisName: string]: Analysis } = {
 
 const analyze = (repository: Repository<Date>, afterDate: Date | null): void => {
   Object.entries(allAnalysis).forEach(([analysisName, analysisFunction]) => {
-    console.group(analysisName);
+    console.group(chalk.cyan(analysisName));
     const result = analysisFunction(repository, afterDate);
     Object.entries(result).forEach(([metricName, metricResult]) => {
       console.log(`${metricName}: ${metricResult}`);
