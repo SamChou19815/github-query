@@ -1,5 +1,5 @@
-import { RawCommit, RawIssue, RawPullRequest, Response } from './response-types';
-import { Commit, Issue, PullRequest, Repository } from './processed-types';
+import { RawIssue, RawPullRequest, Response } from './response-types';
+import { Issue, PullRequest, Repository } from './processed-types';
 
 const processIssue = ({
   number,
@@ -37,32 +37,6 @@ const processPullRequest = ({
   updatedAt: new Date(updatedAt)
 });
 
-const processCommit = ({
-  id,
-  message,
-  signature,
-  additions,
-  deletions,
-  committedDate,
-  pushedDate,
-  changedFiles,
-  author: { user },
-  associatedPullRequests,
-  status
-}: RawCommit): Commit<Date> => ({
-  id,
-  message,
-  hasValidSignature: signature != null && signature.isValid,
-  isFromPullRequest: associatedPullRequests.nodes.length >= 1,
-  additions,
-  deletions,
-  committedDate: new Date(committedDate),
-  pushedDate: new Date(pushedDate),
-  changedFiles,
-  author: user == null ? null : user.login,
-  state: status == null ? null : status.state
-});
-
 export const processClientResponse = ({
   repository: {
     hasIssuesEnabled,
@@ -70,10 +44,7 @@ export const processClientResponse = ({
     updatedAt,
     pushedAt,
     issues: { totalCount: issuesCount, nodes: issueNodes },
-    pullRequests: { totalCount: pullRequestsCount, nodes: pullRequestNodes },
-    object: {
-      history: { totalCount: commitsCount, nodes: commitNodes }
-    }
+    pullRequests: { totalCount: pullRequestsCount, nodes: pullRequestNodes }
   }
 }: Response): Repository<Date> => ({
   hasIssuesEnabled,
@@ -82,10 +53,8 @@ export const processClientResponse = ({
   pushedAt: new Date(pushedAt),
   issuesCount,
   pullRequestsCount,
-  commitsCount,
   issues: issueNodes.map(processIssue),
-  pullRequests: pullRequestNodes.map(processPullRequest),
-  commits: commitNodes.map(processCommit)
+  pullRequests: pullRequestNodes.map(processPullRequest)
 });
 
 export const processRepository = <T, R>(
@@ -101,10 +70,8 @@ export const processRepository = <T, R>(
     pushedAt,
     issuesCount,
     pullRequestsCount,
-    commitsCount,
     issues,
-    pullRequests,
-    commits
+    pullRequests
   } = source;
   return {
     hasIssuesEnabled,
@@ -113,7 +80,6 @@ export const processRepository = <T, R>(
     pushedAt: converter(pushedAt),
     issuesCount,
     pullRequestsCount,
-    commitsCount,
     issues: issues.map(({ createdAt, closedAt, updatedAt: updatedAtTime, ...rest }) => ({
       ...rest,
       createdAt: converter(createdAt),
@@ -127,11 +93,6 @@ export const processRepository = <T, R>(
         closedAt: optionalConverter(closedAt),
         updatedAt: converter(updatedAtTime)
       })
-    ),
-    commits: commits.map(({ committedDate, pushedDate, ...rest }) => ({
-      ...rest,
-      committedDate: converter(committedDate),
-      pushedDate: converter(pushedDate)
-    }))
+    )
   };
 };
