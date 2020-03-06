@@ -4,9 +4,14 @@
 
 import { Repository } from '../core/processed-types';
 import { fetchRecent, fetchAll } from './client';
-import { store } from './storage';
+import { exists, store, retrive } from './storage';
 
-export const fetchRecentAndStore = (owner: string, name: string): Promise<Repository<Date>> =>
+export type Fetcher = (owner: string, name: string) => Promise<Repository<Date>>;
+
+export const freshFetchRecentAndStore: Fetcher = (
+  owner: string,
+  name: string
+): Promise<Repository<Date>> =>
   fetchRecent({
     owner,
     name,
@@ -18,8 +23,30 @@ export const fetchRecentAndStore = (owner: string, name: string): Promise<Reposi
     return repository;
   });
 
-export const fetchAllAndStore = (owner: string, name: string): Promise<Repository<Date>> =>
+export const freshFetchAllAndStore: Fetcher = (
+  owner: string,
+  name: string
+): Promise<Repository<Date>> =>
   fetchAll(owner, name).then(repository => {
     store(`${owner}-${name}-all`, repository);
     return repository;
   });
+
+export const getRecent: Fetcher = async (
+  owner: string,
+  name: string
+): Promise<Repository<Date>> => {
+  const id = `${owner}-${name}-recent`;
+  if (exists(id)) {
+    return retrive(id);
+  }
+  return freshFetchRecentAndStore(owner, name);
+};
+
+export const getAll: Fetcher = async (owner: string, name: string): Promise<Repository<Date>> => {
+  const id = `${owner}-${name}-all`;
+  if (exists(id)) {
+    return retrive(id);
+  }
+  return freshFetchAllAndStore(owner, name);
+};
