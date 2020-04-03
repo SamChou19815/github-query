@@ -1,5 +1,5 @@
-import { AnalysisResult, roundToDaysWith2Digits } from './analysis-common';
 import { Repository } from '../core/processed-types';
+import { AnalysisResult, roundToDaysWith2Digits } from './analysis-common';
 
 interface PullRequestHealthStatistics extends AnalysisResult {
   readonly openPullRequestCount: number;
@@ -82,6 +82,6 @@ export default (
     averageMergeDays,
     averageCloseDays,
     mostOptimisticAverageMergeDays,
-    mostOptimisticAverageCloseDays
+    mostOptimisticAverageCloseDays,
   };
 };

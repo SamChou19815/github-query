@@ -1,13 +1,14 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
+
+import { Repository } from '../core/processed-types';
 import { Analysis } from './analysis-common';
 import IssueHealthAnalysis from './analysis-issue-health';
 import PullRequestHealthAnalysis from './analysis-pr-health';
-import { Repository } from '../core/processed-types';
 
 const allAnalysis: { readonly [analysisName: string]: Analysis } = {
   IssueHealthAnalysis,
-  PullRequestHealthAnalysis
+  PullRequestHealthAnalysis,
 };
 
 const analyze = (repository: Repository<Date>, afterDate: Date | null): void => {

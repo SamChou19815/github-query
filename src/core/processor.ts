@@ -1,5 +1,5 @@
-import { RawIssue, RawPullRequest, Response } from './response-types';
 import { Issue, PullRequest, Repository } from './processed-types';
+import { RawIssue, RawPullRequest, Response } from './response-types';
 
 const processIssue = ({
   number,
@@ -8,7 +8,7 @@ const processIssue = ({
   state,
   createdAt,
   closedAt,
-  timelineItems: { updatedAt }
+  timelineItems: { updatedAt },
 }: RawIssue): Issue<Date> => ({
   number,
   title,
@@ -16,7 +16,7 @@ const processIssue = ({
   state,
   createdAt: new Date(createdAt),
   closedAt: closedAt == null ? null : new Date(closedAt),
-  updatedAt: new Date(updatedAt)
+  updatedAt: new Date(updatedAt),
 });
 
 const processPullRequest = ({
@@ -26,7 +26,7 @@ const processPullRequest = ({
   state,
   createdAt,
   closedAt,
-  timelineItems: { updatedAt }
+  timelineItems: { updatedAt },
 }: RawPullRequest): PullRequest<Date> => ({
   number,
   title,
@@ -34,7 +34,7 @@ const processPullRequest = ({
   state,
   createdAt: new Date(createdAt),
   closedAt: closedAt == null ? null : new Date(closedAt),
-  updatedAt: new Date(updatedAt)
+  updatedAt: new Date(updatedAt),
 });
 
 export const processClientResponse = ({
@@ -44,8 +44,8 @@ export const processClientResponse = ({
     updatedAt,
     pushedAt,
     issues: { totalCount: issuesCount, nodes: issueNodes },
-    pullRequests: { totalCount: pullRequestsCount, nodes: pullRequestNodes }
-  }
+    pullRequests: { totalCount: pullRequestsCount, nodes: pullRequestNodes },
+  },
 }: Response): Repository<Date> => ({
   hasIssuesEnabled,
   licenseKey: licenseInfo == null ? null : licenseInfo.key,
@@ -54,7 +54,7 @@ export const processClientResponse = ({
   issuesCount,
   pullRequestsCount,
   issues: issueNodes.map(processIssue),
-  pullRequests: pullRequestNodes.map(processPullRequest)
+  pullRequests: pullRequestNodes.map(processPullRequest),
 });
 
 export const processRepository = <T, R>(
@@ -71,7 +71,7 @@ export const processRepository = <T, R>(
     issuesCount,
     pullRequestsCount,
     issues,
-    pullRequests
+    pullRequests,
   } = source;
   return {
     hasIssuesEnabled,
@@ -84,15 +84,15 @@ export const processRepository = <T, R>(
       ...rest,
       createdAt: converter(createdAt),
       closedAt: optionalConverter(closedAt),
-      updatedAt: converter(updatedAtTime)
+      updatedAt: converter(updatedAtTime),
     })),
     pullRequests: pullRequests.map(
       ({ createdAt, closedAt, updatedAt: updatedAtTime, ...rest }) => ({
         ...rest,
         createdAt: converter(createdAt),
         closedAt: optionalConverter(closedAt),
-        updatedAt: converter(updatedAtTime)
+        updatedAt: converter(updatedAtTime),
       })
-    )
+    ),
   };
 };
