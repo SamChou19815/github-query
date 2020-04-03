@@ -16,7 +16,7 @@ export const freshFetchRecentAndStore: Fetcher = (
     owner,
     name,
     issuesLimit: 100,
-    pullRequestsLimit: 100
+    pullRequestsLimit: 100,
   }).then(({ repository }) => {
     store(`${owner}-${name}-recent`, repository);
     return repository;
@@ -26,7 +26,7 @@ export const freshFetchAllAndStore: Fetcher = (
   owner: string,
   name: string
 ): Promise<Repository<Date>> =>
-  fetchAll(owner, name).then(repository => {
+  fetchAll(owner, name).then((repository) => {
     store(`${owner}-${name}-all`, repository);
     return repository;
   });

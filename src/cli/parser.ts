@@ -12,11 +12,11 @@ const parseToRawOptions = (zeroIndexedArguments: readonly string[]): MutableRawO
   const rawOptions: MutableRawOptions = {
     positionals: [],
     presented: new Set(),
-    keyValuePairs: new Map()
+    keyValuePairs: new Map(),
   };
   let lastOption: string | null = null;
   let finishedParsingNonPositionals = false;
-  zeroIndexedArguments.forEach(argument => {
+  zeroIndexedArguments.forEach((argument) => {
     if (finishedParsingNonPositionals) {
       rawOptions.positionals.push(argument);
       return;

@@ -1,5 +1,6 @@
 import { existsSync, writeFileSync, readFileSync } from 'fs';
 import { join } from 'path';
+
 import { Repository } from '../core/processed-types';
 import { processRepository } from '../core/processor';
 

@@ -1,14 +1,15 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
+
+import analyze from './analysis';
+import cli from './cli';
 import {
   Fetcher,
   freshFetchAllAndStore,
   freshFetchRecentAndStore,
   getRecent,
-  getAll
+  getAll,
 } from './data';
-import cli from './cli';
-import analyze from './analysis';
 
 async function main() {
   const { repositories, after, recent, fresh } = cli();

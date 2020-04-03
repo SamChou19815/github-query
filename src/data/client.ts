@@ -1,13 +1,14 @@
 import { GraphQLClient } from 'graphql-request';
+
+import { Repository } from '../core/processed-types';
 import { processClientResponse } from '../core/processor';
 import { Response } from '../core/response-types';
-import { Repository } from '../core/processed-types';
 import GITHUB_TOKEN from './github-token';
 
 const ENDPOINT = 'https://api.github.com/graphql';
 
 const graphQLClient = new GraphQLClient(ENDPOINT, {
-  headers: { authorization: `Bearer ${GITHUB_TOKEN}` }
+  headers: { authorization: `Bearer ${GITHUB_TOKEN}` },
 });
 
 export type RequestConfiguration = {
@@ -77,7 +78,7 @@ export const fetchRecent = async ({
   issuesLimit,
   issuesCursor,
   pullRequestsLimit,
-  pullRequestsCursor
+  pullRequestsCursor,
 }: RequestConfiguration): Promise<RecentRepositoryInformation> => {
   const query = `
   query {
@@ -99,7 +100,7 @@ export const fetchRecent = async ({
   return {
     repository,
     issuesCursor: rawRepository.issues.pageInfo.endCursor,
-    pullRequestsCursor: rawRepository.pullRequests.pageInfo.endCursor
+    pullRequestsCursor: rawRepository.pullRequests.pageInfo.endCursor,
   };
 };
 
@@ -109,7 +110,7 @@ export const fetchAll = async (owner: string, name: string): Promise<Repository<
     owner,
     name,
     issuesLimit: LIMIT,
-    pullRequestsLimit: LIMIT
+    pullRequestsLimit: LIMIT,
   });
   const { repository } = information;
   let { issuesCursor, pullRequestsCursor } = information;
@@ -120,7 +121,7 @@ export const fetchAll = async (owner: string, name: string): Promise<Repository<
     const {
       repository: { issues: newIssues, pullRequests: newPullRequests },
       issuesCursor: newIssuesCursor,
-      pullRequestsCursor: newPullRequestsCursor
+      pullRequestsCursor: newPullRequestsCursor,
       // eslint-disable-next-line no-await-in-loop
     } = await fetchRecent({
       owner,
@@ -128,7 +129,7 @@ export const fetchAll = async (owner: string, name: string): Promise<Repository<
       issuesLimit: issuesCursor == null ? 0 : LIMIT,
       issuesCursor,
       pullRequestsLimit: pullRequestsCursor == null ? 0 : LIMIT,
-      pullRequestsCursor
+      pullRequestsCursor,
     });
     issueList.push(...newIssues);
     pullRequestList.push(...newPullRequests);
@@ -139,6 +140,6 @@ export const fetchAll = async (owner: string, name: string): Promise<Repository<
   return {
     issues: issueList,
     pullRequests: pullRequestList,
-    ...repositoryMetadata
+    ...repositoryMetadata,
   };
 };
