@@ -3,6 +3,7 @@ import chalk from 'chalk';
 
 import analyze from './analysis';
 import cli from './cli';
+import { Repository } from './core/processed-types';
 import {
   Fetcher,
   freshFetchAllAndStore,
@@ -21,7 +22,8 @@ async function main() {
     fetcher = fresh ? freshFetchAllAndStore : getAll;
   }
 
-  console.log('Fetching data and analyzing...');
+  const fetchedRepositories: (readonly [string, Repository<Date>])[] = [];
+  console.log('Fetching repository data...');
   for (const repo of repositories) {
     const repoParts = repo.split('/');
     if (repoParts.length !== 2) {
@@ -32,14 +34,23 @@ async function main() {
       continue;
     }
     const [owner, name] = repoParts;
-    console.group(chalk.green(repo));
     try {
+      const start = new Date().getTime();
       // eslint-disable-next-line no-await-in-loop
       const repository = await fetcher(owner, name);
-      analyze(repository, after);
+      const end = new Date().getTime();
+      if (end - start > 500) {
+        console.log(`Fetched ${repo}.`);
+      }
+      fetchedRepositories.push([repo, repository]);
     } catch (error) {
       console.error(`Unable to fetch data for ${repo}. Error: ${error.message}`);
     }
+  }
+  console.log('Fetching data and analyzing...');
+  for (const [repo, repository] of fetchedRepositories) {
+    console.group(chalk.green(repo));
+    analyze(repository, after);
     console.groupEnd();
   }
 }
