@@ -5,10 +5,12 @@ import { Repository } from '../core/processed-types';
 import { Analysis } from './analysis-common';
 import IssueHealthAnalysis from './analysis-issue-health';
 import PullRequestHealthAnalysis from './analysis-pr-health';
+import PullRequestMemberStatisticsAnalysis from './analysis-pr-member-statistics';
 
 const allAnalysis: { readonly [analysisName: string]: Analysis } = {
   IssueHealthAnalysis,
   PullRequestHealthAnalysis,
+  PullRequestMemberStatisticsAnalysis,
 };
 
 const analyze = (repository: Repository<Date>, afterDate: Date | null): void => {
