@@ -8,8 +8,6 @@ jobs:
       - uses: actions/checkout@master
       - name: Set up Node
         uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
       - name: Create Dummy Files
         run: echo "export default '${{ secrets.GITHUB_TOKEN }}';" > src/data/github-token.ts
       - name: Yarn Install
