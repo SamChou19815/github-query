@@ -12,17 +12,11 @@ import {
   getAll,
 } from './data';
 
-async function main() {
-  const { repositories, after, recent, fresh } = cli();
-
-  let fetcher: Fetcher;
-  if (recent) {
-    fetcher = fresh ? freshFetchRecentAndStore : getRecent;
-  } else {
-    fetcher = fresh ? freshFetchAllAndStore : getAll;
-  }
-
-  const fetchedRepositories: (readonly [string, Repository<Date>])[] = [];
+async function fetchRepositoryData(
+  fetcher: Fetcher,
+  repositories: readonly string[]
+): Promise<(readonly [string, Repository<Date>])[]> {
+  const fetchedRepositories: [string, Repository<Date>][] = [];
   console.log('Fetching repository data...');
   for (const repo of repositories) {
     const repoParts = repo.split('/');
@@ -47,7 +41,22 @@ async function main() {
       console.error(`Unable to fetch data for ${repo}. Error: ${error.message}`);
     }
   }
-  console.log('Fetching data and analyzing...');
+  return fetchedRepositories;
+}
+
+async function main() {
+  const { repositories, after, recent, fresh } = cli();
+
+  let fetcher: Fetcher;
+  if (recent) {
+    fetcher = fresh ? freshFetchRecentAndStore : getRecent;
+  } else {
+    fetcher = fresh ? freshFetchAllAndStore : getAll;
+  }
+
+  const fetchedRepositories = await fetchRepositoryData(fetcher, repositories);
+
+  console.log('Analyzing repository data...');
   for (const [repo, repository] of fetchedRepositories) {
     console.group(chalk.green(repo));
     analyze(repository, after);
