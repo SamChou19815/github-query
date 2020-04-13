@@ -5,7 +5,6 @@
 node_modules/
 build/
 dist/
-*.js
 tsbuildinfo.json
 *.d.ts
 
@@ -20,3 +19,10 @@ local-scripts/*
 
 # Editor
 .vscode/
+
+# Yarn
+.yarn/*
+!.yarn/cache
+!.yarn/releases
+!.yarn/plugins
+.pnp.js
