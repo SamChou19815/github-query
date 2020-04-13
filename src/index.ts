@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
 
-import analyze from './analysis';
+import { analyzeLocal, analyzeGlobal } from './analysis';
 import cli from './cli';
 import { Repository } from './core/processed-types';
 import {
@@ -59,9 +59,13 @@ async function main() {
   console.log('Analyzing repository data...');
   for (const [repo, repository] of fetchedRepositories) {
     console.group(chalk.green(repo));
-    analyze(repository, after);
+    analyzeLocal(repository, after);
     console.groupEnd();
   }
+  analyzeGlobal(
+    fetchedRepositories.map(([, repository]) => repository),
+    after
+  );
 }
 
 main();
