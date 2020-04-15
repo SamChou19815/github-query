@@ -2,6 +2,7 @@
   "name": "github-query",
   "version": "2.0.0-0",
   "private": true,
+  "bin": "./dist/index.js",
   "scripts": {
     "build": "tsc",
     "lint": "eslint . --ext .ts --ext .tsx",
