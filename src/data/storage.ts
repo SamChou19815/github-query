@@ -1,5 +1,5 @@
-import { existsSync, writeFileSync, readFileSync } from 'fs';
-import { join } from 'path';
+import { existsSync, mkdirSync, writeFileSync, readFileSync } from 'fs';
+import { dirname, join } from 'path';
 
 import { Repository } from '../core/processed-types';
 import { processRepository } from '../core/processor';
@@ -14,8 +14,14 @@ const deserialize = (serializedRepository: string): Repository<Date> =>
 
 export const exists = (id: string): boolean => existsSync(getPath(id));
 
-export const store = (id: string, repository: Repository<Date>) =>
-  writeFileSync(getPath(id), serialize(repository));
+export const store = (id: string, repository: Repository<Date>) => {
+  const path = getPath(id);
+  const directory = dirname(path);
+  if (!existsSync(directory)) {
+    mkdirSync(directory);
+  }
+  writeFileSync(path, serialize(repository));
+};
 
 export const retrive = (id: string): Repository<Date> => {
   const content = readFileSync(getPath(id)).toString();
