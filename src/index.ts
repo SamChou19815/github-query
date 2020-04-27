@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 /* eslint-disable no-console */
+import chalk from 'chalk';
 
 import { aggregatedAnalyzeLocal, analyzeGlobal } from './analysis';
 import cli from './cli';
@@ -18,7 +19,7 @@ async function fetchRepositoryData(
   repositories: readonly string[]
 ): Promise<(readonly [string, Repository<Date>])[]> {
   const fetchedRepositories: [string, Repository<Date>][] = [];
-  console.log('Fetching repository data...');
+  console.log(chalk.yellow('Fetching repository data...'));
   for (const repo of repositories) {
     const repoParts = repo.split('/');
     if (repoParts.length !== 2) {
@@ -35,7 +36,7 @@ async function fetchRepositoryData(
       const repository = await fetcher(owner, name);
       const end = new Date().getTime();
       if (end - start > 500) {
-        console.log(`Fetched ${repo}.`);
+        console.log(chalk.yellow(`Fetched ${repo}.`));
       }
       fetchedRepositories.push([repo, repository]);
     } catch (error) {
@@ -57,12 +58,21 @@ async function main() {
 
   const fetchedRepositories = await fetchRepositoryData(fetcher, repositories);
 
-  console.log('Analyzing repository data...');
-  aggregatedAnalyzeLocal(fetchedRepositories, after);
-  analyzeGlobal(
-    fetchedRepositories.map(([, repository]) => repository),
-    after
-  );
+  console.log(chalk.yellow('Analyzing repository data...'));
+  const allAnalysisResult = [
+    ...aggregatedAnalyzeLocal(fetchedRepositories, after),
+    ...analyzeGlobal(
+      fetchedRepositories.map(([, repository]) => repository),
+      after
+    ),
+  ];
+  allAnalysisResult.forEach(({ analysisName, analysisResult }) => {
+    console.group(chalk.green(analysisName));
+    Object.entries(analysisResult).forEach(([name, value]) => {
+      console.log(`${chalk.cyan(name)}: ${value}`);
+    });
+    console.groupEnd();
+  });
 }
 
 main();
