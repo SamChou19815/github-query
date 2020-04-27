@@ -1,10 +1,11 @@
 {
   "name": "@dev-sam/github-query",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "bin": "./dist/index.js",
   "scripts": {
     "build": "tsc",
     "dev": "tsc --incremental --watch",
+    "publish-to-npm": "yarn build && rm dist/tsconfig.tsbuildinfo && yarn npm publish --access public",
     "lint": "eslint . --ext .ts --ext .tsx",
     "format": "prettier --write '**/*.{ts,tsx}'",
     "format:check": "prettier --check '**/*.{ts,tsx}'"
