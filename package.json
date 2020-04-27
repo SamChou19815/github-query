@@ -4,6 +4,7 @@
   "bin": "./dist/index.js",
   "scripts": {
     "build": "tsc",
+    "dev": "tsc --incremental --watch",
     "lint": "eslint . --ext .ts --ext .tsx",
     "format": "prettier --write '**/*.{ts,tsx}'",
     "format:check": "prettier --check '**/*.{ts,tsx}'"
