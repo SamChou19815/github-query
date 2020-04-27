@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 
 /* eslint-disable no-console */
-import chalk from 'chalk';
 
-import { analyzeLocal, analyzeGlobal } from './analysis';
+import { aggregatedAnalyzeLocal, analyzeGlobal } from './analysis';
 import cli from './cli';
 import { Repository } from './core/processed-types';
 import {
@@ -59,11 +58,7 @@ async function main() {
   const fetchedRepositories = await fetchRepositoryData(fetcher, repositories);
 
   console.log('Analyzing repository data...');
-  for (const [repo, repository] of fetchedRepositories) {
-    console.group(chalk.green(repo));
-    analyzeLocal(repository, after);
-    console.groupEnd();
-  }
+  aggregatedAnalyzeLocal(fetchedRepositories, after);
   analyzeGlobal(
     fetchedRepositories.map(([, repository]) => repository),
     after
