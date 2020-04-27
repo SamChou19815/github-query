@@ -68,6 +68,7 @@ __metadata:
     "@typescript-eslint/parser": ^2.30.0
     "@yarnpkg/pnpify": ^2.0.0-rc.20
     chalk: ^4.0.0
+    dotenv: ^8.2.0
     eslint: ^6.8.0
     eslint-config-airbnb: ^18.1.0
     eslint-config-prettier: ^6.11.0
@@ -884,6 +885,13 @@ __metadata:
   dependencies:
     esutils: ^2.0.2
   checksum: 2/2eae469bd2889ceee9892083a67340b3622568fe5290edce620e5d5ddab23d644b2a780e9a7c68ad9c8a62716a70c5e484402ac93a398fa78b54b7505592aa7f
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "dotenv@npm:8.2.0"
+  checksum: 2/16cb89cbd7b98b053899b8aba8c5044c8fb61a2db8a81fe70360b75035fce5fed53bd7a34d772be717d0880c0321122a4c09423f518025e1b52d96791521b1a7
   languageName: node
   linkType: hard
 
