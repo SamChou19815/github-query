@@ -49,3 +49,8 @@ $ github-query <options> [repo...]
 --fresh    Force fetching new data.                  [boolean] [default: false]
 --help     Show help                                                  [boolean]
 ```
+
+## Compatibility Guarantee
+
+Only the CLI is considered as part of the public API. 
+Signatures of internal functions are not guaranteed to be stable across versions.
