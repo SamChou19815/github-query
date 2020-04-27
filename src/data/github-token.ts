@@ -1,9 +1,9 @@
-/* eslint-disable no-console */
 import chalk from 'chalk';
 import dotEnv from 'dotenv';
 
 dotEnv.config();
 
+// eslint-disable-next-line no-console
 const logError = (line: string): void => console.error(chalk.red(line));
 
 const throwFatalError = (): never => {
