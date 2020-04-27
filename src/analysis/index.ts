@@ -16,14 +16,24 @@ const globalAnalysis: { readonly [analysisName: string]: GlobalAnalysis } = {
   PullRequestMemberStatisticsAnalysis,
 };
 
-export const analyzeLocal = (repository: Repository<Date>, afterDate: Date | null): void => {
+export const aggregatedAnalyzeLocal = (
+  repositories: readonly (readonly [string, Repository<Date>])[],
+  afterDate: Date | null
+): void => {
+  if (repositories.length === 0) {
+    return;
+  }
   Object.entries(localAnalysis).forEach(([analysisName, analysisFunction]) => {
-    console.group(chalk.cyan(analysisName));
-    const result = analysisFunction(repository, afterDate);
-    Object.entries(result).forEach(([metricName, metricResult]) => {
-      console.log(`${metricName}: ${metricResult}`);
+    const results = repositories.map(
+      ([name, repository]) => [name, analysisFunction(repository, afterDate)] as const
+    );
+    Object.keys(results[0][1]).forEach((metricName) => {
+      console.group(chalk.green(`${analysisName}/${metricName}`));
+      results.forEach(([repositoryName, result]) => {
+        console.log(`${chalk.cyan(repositoryName)}: ${result[metricName]}`);
+      });
+      console.groupEnd();
     });
-    console.groupEnd();
   });
 };
 
