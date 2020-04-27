@@ -15,5 +15,7 @@ export type GlobalAnalysis = (
 ) => AnalysisResult;
 
 // eslint-disable-next-line import/prefer-default-export
-export const roundToDaysWith2Digits = (timeIntervalInMilliseconds: number): number =>
-  Math.round((timeIntervalInMilliseconds / 1000 / 3600 / 24) * 100) / 100;
+export const roundToDaysWith2Digits = (timeIntervalInMilliseconds: number): number => {
+  const average = Math.round((timeIntervalInMilliseconds / 1000 / 3600 / 24) * 100) / 100;
+  return isNaN(average) ? 0 : average;
+};
