@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./github-query-cli --after 2020-02-01 \
+yarn github-query --after 2020-02-01 \
   SamChou19815/tssa \
   SamChou19815/github-query \
   SamChou19815/samlang \
