@@ -41,7 +41,7 @@ yarn
 ### CLI
 
 ```terminal
-$ github-query-cli <options> [repo...]
+$ github-query <options> [repo...]
 [repo]     Path to the repository. e.g. facebook/react [string list] [required]
 --after    Only consider objects after this specified time. e.g. 2020-02-02
                                                                        [string]

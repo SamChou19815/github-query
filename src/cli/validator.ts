@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { Options } from './types';
 
-const helpMessage = `$ github-query-cli <options> [repo...]
+const helpMessage = `$ github-query <options> [repo...]
 [repo]     Path to the repository. e.g. facebook/react [string list] [required]
 --after    Only consider objects after this specified time. e.g. 2020-02-02
                                                                        [string]
