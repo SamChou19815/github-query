@@ -13,13 +13,14 @@ import {
   getRecent,
   getAll,
 } from './data';
+import displayWithCharts from './display/display-chart';
+import displayWithText from './display/display-text';
 
 async function fetchRepositoryData(
   fetcher: Fetcher,
   repositories: readonly string[]
 ): Promise<(readonly [string, Repository<Date>])[]> {
   const fetchedRepositories: [string, Repository<Date>][] = [];
-  console.log(chalk.yellow('Fetching repository data...'));
   for (const repo of repositories) {
     const repoParts = repo.split('/');
     if (repoParts.length !== 2) {
@@ -47,7 +48,7 @@ async function fetchRepositoryData(
 }
 
 async function main() {
-  const { repositories, after, recent, fresh } = cli();
+  const { repositories, after, recent, fresh, chart } = cli();
 
   let fetcher: Fetcher;
   if (recent) {
@@ -58,7 +59,6 @@ async function main() {
 
   const fetchedRepositories = await fetchRepositoryData(fetcher, repositories);
 
-  console.log(chalk.yellow('Analyzing repository data...'));
   const allAnalysisResult = [
     ...aggregatedAnalyzeLocal(fetchedRepositories, after),
     ...analyzeGlobal(
@@ -66,13 +66,11 @@ async function main() {
       after
     ),
   ];
-  allAnalysisResult.forEach(({ analysisName, analysisResult }) => {
-    console.group(chalk.green(analysisName));
-    Object.entries(analysisResult).forEach(([name, value]) => {
-      console.log(`${chalk.cyan(name)}: ${value}`);
-    });
-    console.groupEnd();
-  });
+  if (chart || process.env.CHART_MODE === 'true') {
+    displayWithCharts(allAnalysisResult);
+  } else {
+    displayWithText(allAnalysisResult);
+  }
 }
 
 main();
