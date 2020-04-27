@@ -32,6 +32,12 @@ The token must have the following permission:
 - `read:user`
 - `user:email`
 
+### Quickstart
+
+```bash
+npx @dev-sam/github-query SamChou19815/github-query
+```
+
 ### Installation
 
 ```bash
