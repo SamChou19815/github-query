@@ -16,21 +16,21 @@ A cross platform tool for querying and displaying GitHub repository metrics.
 
 ### Configuration
 
-Create `src/data/github-token.ts` with content:
+Create `.env with content:
 
-```typescript
-/*
- * The token must have the following permission:
- * - repo
- * - read:gpg_key
- * - read:org
- * - read:public_key
- * - read:repo_hook
- * - read:user
- * - user:email
- */
-export default '[Your GitHub personal access token]';
+```bash
+GITHUB_TOKEN=[Your GitHub personal access token]
 ```
+
+The token must have the following permission:
+
+- `repo`
+- `read:gpg_key`
+- `read:org`
+- `read:public_key`
+- `read:repo_hook`
+- `read:user`
+- `user:email`
 
 ### Installation
 

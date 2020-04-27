@@ -9,9 +9,9 @@ tsbuildinfo.json
 *.d.ts
 
 # Configurations
-src/data/github-token.ts
+.env
 
-## Local Data
+# Local Data
 local-database/*
 !local-database/.gitkeep
 local-scripts/*
