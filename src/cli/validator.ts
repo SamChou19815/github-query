@@ -7,6 +7,7 @@ const helpMessage = `$ github-query <options> [repo...]
                                                                        [string]
 --recent   Only get recent information.              [boolean] [default: false]
 --fresh    Force fetching new data.                  [boolean] [default: false]
+--chart    Display results in charts.                [boolean] [default: false]
 --help     Show help                                                  [boolean]
 `;
 

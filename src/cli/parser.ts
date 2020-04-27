@@ -53,9 +53,10 @@ const parse = (zeroIndexedArguments: readonly string[] = normalizedArguments): O
   const help = presented.has('help');
   const recent = presented.has('recent');
   const fresh = presented.has('fresh');
+  const chart = presented.has('chart');
   const afterString = keyValuePairs.get('after');
   const after = afterString == null ? null : new Date(afterString);
-  return { repositories, after, fresh, recent, help };
+  return { repositories, after, fresh, recent, chart, help };
 };
 
 export default parse;
