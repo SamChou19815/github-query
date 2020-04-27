@@ -52,5 +52,6 @@ $ github-query <options> [repo...]
 
 ## Compatibility Guarantee
 
-Only the CLI is considered as part of the public API. 
+Only the signatures of arguments of CLI is considered as part of the public API.
+Outputs of CLI are not guaranteed to be stable across versions.
 Signatures of internal functions are not guaranteed to be stable across versions.
