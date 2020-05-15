@@ -4,7 +4,7 @@ import blessedContributions from 'blessed-contrib';
 
 import { Display } from './display-common';
 
-const MAX_COLUMNS = 10;
+const MAX_COLUMNS = 11;
 
 const displayWithCharts: Display = (allAnalysisReports) => {
   const filteredAnalysis = allAnalysisReports
