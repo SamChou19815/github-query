@@ -1,9 +1,12 @@
 import { Repository } from '../core/processed-types';
-import { AnalysisResult, roundToDaysWith2Digits } from './analysis-common';
+import { AnalysisStatistics, roundToDaysWith2Digits } from './analysis-common';
 
-interface PullRequestHealthStatistics extends AnalysisResult {
+interface IssueHealthCountStatistics extends AnalysisStatistics {
   readonly openIssueCount: number;
   readonly closedIssueCount: number;
+}
+
+interface IssueHealthAverageStatistics extends AnalysisStatistics {
   readonly averageCloseDays: number;
   // Assuming open ones are immediately closed.
   readonly mostOptimisticAverageCloseDays: number;
@@ -12,7 +15,7 @@ interface PullRequestHealthStatistics extends AnalysisResult {
 export default (
   { issues }: Repository<Date>,
   afterDate: Date | null
-): PullRequestHealthStatistics => {
+): [IssueHealthCountStatistics, IssueHealthAverageStatistics] => {
   let openIssueCount = 0;
   let closedIssueCount = 0;
   let closedTotalOpenTime = 0;
@@ -43,5 +46,8 @@ export default (
   const mostOptimisticAverageCloseDays = roundToDaysWith2Digits(
     allTotalOpenTime / (openIssueCount + closedIssueCount)
   );
-  return { openIssueCount, closedIssueCount, averageCloseDays, mostOptimisticAverageCloseDays };
+  return [
+    { openIssueCount, closedIssueCount },
+    { averageCloseDays, mostOptimisticAverageCloseDays },
+  ];
 };

@@ -1,19 +1,15 @@
 import { Repository } from '../core/processed-types';
-import { AnalysisResult } from './analysis-common';
+import { AnalysisStatistics, AnalysisResult } from './analysis-common';
 
-interface PullRequestMemberStatistics extends AnalysisResult {
-  readonly [memberId: string]: number;
-}
-
-type MutablePullRequestMemberStatistics = {
-  -readonly [memberId in keyof PullRequestMemberStatistics]: number;
+type MutableStatistics = {
+  -readonly [memberId in keyof AnalysisStatistics]: number;
 };
 
 const analyzeSingleRepository = (
   { pullRequests }: Repository<Date>,
   afterDate: Date | null
-): PullRequestMemberStatistics => {
-  const statistics: MutablePullRequestMemberStatistics = {};
+): AnalysisStatistics => {
+  const statistics: MutableStatistics = {};
   pullRequests.forEach(({ author, createdAt }) => {
     if (author == null) {
       return;
@@ -29,19 +25,19 @@ const analyzeSingleRepository = (
 export default (
   repositories: readonly Repository<Date>[],
   afterDate: Date | null
-): PullRequestMemberStatistics => {
-  const globalStatistics: MutablePullRequestMemberStatistics = {};
+): AnalysisResult => {
+  const globalStatistics: MutableStatistics = {};
   repositories.forEach((repository) => {
     const localStatistics = analyzeSingleRepository(repository, afterDate);
     Object.entries(localStatistics).forEach(([author, count]) => {
       globalStatistics[author] = (globalStatistics[author] ?? 0) + count;
     });
   });
-  const sortedGlobalStatistics: MutablePullRequestMemberStatistics = {};
+  const sortedGlobalStatistics: MutableStatistics = {};
   Object.entries(globalStatistics)
     .sort(([, count1], [, count2]) => count2 - count1)
     .forEach(([author, count]) => {
       sortedGlobalStatistics[author] = count;
     });
-  return sortedGlobalStatistics;
+  return { statisticsValueType: 'count', statistics: sortedGlobalStatistics };
 };

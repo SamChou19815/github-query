@@ -26,13 +26,21 @@ export const aggregatedAnalyzeLocal = (
     const results = repositories.map(
       ([name, repository]) => [name, analysisFunction(repository, afterDate)] as const
     );
-    const sampleResult = results[0][1];
-    return Object.keys(sampleResult).map((metricName) => ({
-      analysisName: `${analysisName}/${metricName}`,
-      analysisResult: Object.fromEntries(
-        results.map(([repositoryName, result]) => [repositoryName, result[metricName]] as const)
-      ),
-    }));
+    const generateReports = (
+      analysisStatisticsValueType: 'count' | 'average'
+    ): readonly SingleAnalysisReport[] => {
+      const index: 0 | 1 = analysisStatisticsValueType === 'count' ? 0 : 1;
+      return Object.keys(results[0][1][index]).map((metricName) => ({
+        analysisName: `${analysisName}/${metricName}`,
+        analysisStatisticsValueType,
+        analysisStatistics: Object.fromEntries(
+          results.map(
+            ([repositoryName, result]) => [repositoryName, result[index][metricName]] as const
+          )
+        ),
+      }));
+    };
+    return [...generateReports('count'), ...generateReports('average')];
   });
 };
 
@@ -40,7 +48,11 @@ export const analyzeGlobal = (
   repositories: readonly Repository<Date>[],
   afterDate: Date | null
 ): readonly SingleAnalysisReport[] =>
-  Object.entries(globalAnalysis).map(([analysisName, analysisFunction]) => ({
-    analysisName,
-    analysisResult: analysisFunction(repositories, afterDate),
-  }));
+  Object.entries(globalAnalysis).map(([analysisName, analysisFunction]) => {
+    const { statistics, statisticsValueType } = analysisFunction(repositories, afterDate);
+    return {
+      analysisName,
+      analysisStatistics: statistics,
+      analysisStatisticsValueType: statisticsValueType,
+    };
+  });
