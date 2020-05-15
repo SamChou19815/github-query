@@ -4,14 +4,19 @@ import blessedContributions from 'blessed-contrib';
 
 import { Display } from './display-common';
 
+const MAX_COLUMNS = 10;
+
 const displayWithCharts: Display = (allAnalysisReports) => {
   const filteredAnalysis = allAnalysisReports
     .map(({ analysisName, analysisResult }) => {
       const noneZeroSortedData = Object.entries(analysisResult)
         .filter(([, value]) => value > 0)
         .sort(([, value1], [, value2]) => value2 - value1);
-      const titles = noneZeroSortedData.map(([name]) => name);
-      const values = noneZeroSortedData.map(([, value]) => value);
+      const titles = noneZeroSortedData
+        .slice(0, MAX_COLUMNS)
+        .map(([name]) => (name.includes('/') ? name.substring(name.indexOf('/') + 1) : name))
+        .map((name) => (name.length > 15 ? `${name.substring(0, 12)}...` : name));
+      const values = noneZeroSortedData.slice(0, MAX_COLUMNS).map(([, value]) => value);
       return { analysisName, titles, values };
     })
     .filter(({ titles }) => titles.length > 0);
