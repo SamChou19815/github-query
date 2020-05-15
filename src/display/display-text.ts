@@ -6,9 +6,16 @@ import chalk from 'chalk';
 import { Display } from './display-common';
 
 const displayWithText: Display = (allAnalysisResult) =>
-  allAnalysisResult.forEach(({ analysisName, analysisResult }) => {
+  allAnalysisResult.forEach(({ analysisName, analysisStatistics, analysisStatisticsValueType }) => {
     console.group(chalk.green(analysisName));
-    Object.entries(analysisResult).forEach(([name, value]) => {
+    if (analysisStatisticsValueType === 'count') {
+      const sum = Object.values(analysisStatistics).reduce(
+        (accumulator, value) => accumulator + value,
+        0
+      );
+      console.log(`${chalk.cyan('Total')}: ${sum}`);
+    }
+    Object.entries(analysisStatistics).forEach(([name, value]) => {
       console.log(`${chalk.cyan(name)}: ${value}`);
     });
     console.groupEnd();

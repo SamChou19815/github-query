@@ -1,10 +1,13 @@
 import { Repository } from '../core/processed-types';
-import { AnalysisResult, roundToDaysWith2Digits } from './analysis-common';
+import { AnalysisStatistics, roundToDaysWith2Digits } from './analysis-common';
 
-interface PullRequestHealthStatistics extends AnalysisResult {
+interface PullRequestHealthCountStatistics extends AnalysisStatistics {
   readonly openPullRequestCount: number;
   readonly mergedPullRequestCount: number;
   readonly closedPullRequestCount: number;
+}
+
+interface PullRequestHealthAverageStatistics extends AnalysisStatistics {
   readonly averageMergeDays: number;
   readonly averageCloseDays: number;
   // Assuming open ones are immediately merged.
@@ -16,7 +19,7 @@ interface PullRequestHealthStatistics extends AnalysisResult {
 export default (
   { pullRequests }: Repository<Date>,
   afterDate: Date | null
-): PullRequestHealthStatistics => {
+): readonly [PullRequestHealthCountStatistics, PullRequestHealthAverageStatistics] => {
   let openPullRequestCount = 0;
   let mergedPullRequestCount = 0;
   let closedPullRequestCount = 0;
@@ -75,13 +78,17 @@ export default (
   const mostOptimisticAverageCloseDays = roundToDaysWith2Digits(
     allTotalOpenTime / (openPullRequestCount + mergedPullRequestCount + closedPullRequestCount)
   );
-  return {
-    openPullRequestCount,
-    mergedPullRequestCount,
-    closedPullRequestCount,
-    averageMergeDays,
-    averageCloseDays,
-    mostOptimisticAverageMergeDays,
-    mostOptimisticAverageCloseDays,
-  };
+  return [
+    {
+      openPullRequestCount,
+      mergedPullRequestCount,
+      closedPullRequestCount,
+    },
+    {
+      averageMergeDays,
+      averageCloseDays,
+      mostOptimisticAverageMergeDays,
+      mostOptimisticAverageCloseDays,
+    },
+  ];
 };

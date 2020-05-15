@@ -8,8 +8,8 @@ const MAX_COLUMNS = 11;
 
 const displayWithCharts: Display = (allAnalysisReports) => {
   const filteredAnalysis = allAnalysisReports
-    .map(({ analysisName, analysisResult }) => {
-      const noneZeroSortedData = Object.entries(analysisResult)
+    .map(({ analysisName, analysisStatistics }) => {
+      const noneZeroSortedData = Object.entries(analysisStatistics)
         .filter(([, value]) => value > 0)
         .sort(([, value1], [, value2]) => value2 - value1);
       const titles = noneZeroSortedData

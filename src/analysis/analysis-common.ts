@@ -1,18 +1,24 @@
 import { Repository } from '../core/processed-types';
 
-export interface AnalysisResult {
+export interface AnalysisStatistics {
   readonly [name: string]: number;
+}
+
+export interface AnalysisResult {
+  readonly statisticsValueType: 'count' | 'average';
+  readonly statistics: AnalysisStatistics;
 }
 
 export type SingleAnalysisReport = {
   readonly analysisName: string;
-  readonly analysisResult: AnalysisResult;
+  readonly analysisStatistics: AnalysisStatistics;
+  readonly analysisStatisticsValueType: 'count' | 'average';
 };
 
 export type LocalAnalysis = (
   repository: Repository<Date>,
   afterDate: Date | null
-) => AnalysisResult;
+) => readonly [AnalysisStatistics, AnalysisStatistics];
 
 export type GlobalAnalysis = (
   repositories: readonly Repository<Date>[],
