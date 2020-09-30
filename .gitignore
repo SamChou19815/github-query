@@ -22,7 +22,6 @@ local-scripts/*
 
 # Yarn
 .yarn/*
-!.yarn/cache
 !.yarn/releases
 !.yarn/plugins
 .pnp.js

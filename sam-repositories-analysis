@@ -1,7 +1,3 @@
 #!/bin/bash
 
-yarn github-query --after 2020-02-01 \
-  SamChou19815/tssa \
-  SamChou19815/github-query \
-  SamChou19815/samlang \
-  SamChou19815/website
+yarn github-query SamChou19815/github-query SamChou19815/samlang SamChou19815/website
