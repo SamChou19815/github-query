@@ -26,9 +26,6 @@ query {
     pushedAt
     issues(last: 50) {
       totalCount
-      pageInfo {
-        endCursor
-      }
       nodes {
         number
         title
@@ -45,9 +42,6 @@ query {
     }
     pullRequests(last: 50) {
       totalCount
-      pageInfo {
-        endCursor
-      }
       nodes {
         number
         title
@@ -58,7 +52,7 @@ query {
         createdAt
         closedAt
         timelineItems {
-           updatedAt
+          updatedAt
         }
       }
     }
